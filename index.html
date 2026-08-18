@@ -15,7 +15,7 @@
             --text-color: #f3f4f6;
             --text-muted: #9ca3af;
             --border-color: rgba(255, 255, 255, 0.08);
-            --input-bg: rgba(23, 22, 37, 0.8);
+            --input-bg: rgba(23, 22, 37, 0.9);
         }
 
         [data-theme="light"] {
@@ -197,12 +197,31 @@
         .export-btn:hover { border-color: var(--primary); }
         .locked-feature { opacity: 0.5; cursor: not-allowed !important; }
 
-        /* VIP ACTIVATION BOX */
+        /* VIP ACTIVATION BOX - Optimized for Touch & Typing */
         .vip-activate-box {
-            display: flex; gap: 10px; margin-top: 10px;
+            display: flex; flex-direction: column; gap: 12px; margin-top: 12px;
         }
-        .vip-input { margin-bottom: 0 !important; }
-        .activate-btn { background: linear-gradient(135deg, #8b5cf6, #ec4899); color: white; border: none; padding: 0 20px; border-radius: 12px; font-weight: bold; cursor: pointer; font-family: 'Pyidaungsu', sans-serif; white-space: nowrap; }
+        .vip-input { 
+            margin-bottom: 0 !important; 
+            width: 100% !important; 
+            font-size: 1.05rem !important;
+            padding: 16px !important;
+            border: 2px solid var(--primary) !important;
+        }
+        .activate-btn { 
+            background: linear-gradient(135deg, #8b5cf6, #ec4899); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 14px; 
+            font-size: 1rem;
+            font-weight: bold; 
+            cursor: pointer; 
+            font-family: 'Pyidaungsu', sans-serif; 
+            width: 100%; 
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
 
         /* PRICING PLANS */
         .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
@@ -304,10 +323,10 @@
             <div class="section-header">VIP Membership Activation</div>
             <label>SCD-VIP Code ထည့်သွင်းရန်</label>
             <div class="vip-activate-box">
-                <input type="text" id="vipCodeInput" class="vip-input" placeholder="ဥပမာ - SCD-VIP-XXXX">
+                <input type="text" id="vipCodeInput" class="vip-input" placeholder="ဥပမာ - SCD-VIP-8899">
                 <button class="activate-btn" onclick="activateVIPCode()">✨ Activate VIP</button>
             </div>
-            <div id="vipStatusMsg" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">Status: Free Plan (SRT & JSON locked)</div>
+            <div id="vipStatusMsg" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">Status: Free Plan (SRT & JSON locked)</div>
         </div>
 
         <!-- 01 / CREATIVE BRIEF -->
@@ -390,8 +409,8 @@
             <div class="export-group">
                 <button class="export-btn" onclick="copyResult()">📋 Copy</button>
                 <button class="export-btn" onclick="downloadTxt()">📥 .txt</button>
-                <button class="export-btn" id="srtBtn" onclick="downloadSrt()">📑 .srt (VIP)</button>
-                <button class="export-btn" id="jsonBtn" onclick="downloadJson()">🗂️ .json (VIP)</button>
+                <button class="export-btn locked-feature" id="srtBtn" onclick="downloadSrt()">📑 .srt (VIP)</button>
+                <button class="export-btn locked-feature" id="jsonBtn" onclick="downloadJson()">🗂️ .json (VIP)</button>
             </div>
         </div>
 
@@ -509,25 +528,20 @@
             showToast("🗑️ API Key ဖယ်ရှားပြီးပါပြီ။");
         }
 
-        // Single-Use SCD-VIP Activation System
         function activateVIPCode() {
             const code = document.getElementById('vipCodeInput').value.trim();
             if(!code) { alert('⚠️ ကျေးဇူးပြု၍ SCD-VIP Code ထည့်ပါ။'); return; }
             
-            // Checks if code starts with SCD-VIP-
             if(code.startsWith('SCD-VIP-') && code.length > 8) {
-                // Check if this code was already used globally/locally to prevent reuse
                 let usedCodes = JSON.parse(localStorage.getItem('mm_used_vip_codes') || '[]');
                 if(usedCodes.includes(code)) {
                     alert('⚠️ ဤ Code သည် အသုံးပြီးသားဖြစ်ပါသည် (သို့မဟုတ်) သက်တမ်းကုန်သွားပါပြီ။');
                     return;
                 }
 
-                // Mark code as used
                 usedCodes.push(code);
                 localStorage.setItem('mm_used_vip_codes', JSON.stringify(usedCodes));
 
-                // Activate VIP for this browser session/device
                 isVIP = true;
                 localStorage.setItem('mm_story_vip_active', 'true');
                 applyVIPUI();
@@ -542,7 +556,6 @@
             document.getElementById('vipStatusMsg').innerHTML = "Status: <span style='color: #c084fc; font-weight: bold;'>🌟 VIP Active (Unlimited Features)</span>";
             document.getElementById('freePlanBtn').innerText = "Free";
             
-            // Unlock export buttons
             const srtBtn = document.getElementById('srtBtn');
             const jsonBtn = document.getElementById('jsonBtn');
             srtBtn.classList.remove('locked-feature');
@@ -604,7 +617,6 @@ STRICT CONTINUITY & ERROR PREVENTION RULES TO ENFORCE:
 
 Provide detailed scene-by-scene prompts following this strict locked structure.`;
 
-                // VPN / CORS friendly fetch configuration
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
