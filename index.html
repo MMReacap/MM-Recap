@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MM Recap - Ultimate SRD & AI Studio</title>
+    <title>MM Recap - Locked Professional SRD Studio</title>
     <style>
         :root {
             --bg-color: #090d16;
             --card-bg: #131b2b;
+            --primary: #6366f1;
             --primary-hover: #4f46e5;
-            --danger: #ef4444;
+            --accent: #10b981;
             --text-color: #f8fafc;
             --border-color: #1e293b;
         }
@@ -20,190 +21,95 @@
             margin: 0;
             padding: 20px;
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        .container { max-width: 900px; margin: 0 auto; }
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--card-bg);
-            padding: 15px 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            margin-bottom: 25px;
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: var(--card-bg); padding: 15px 25px;
+            border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 25px;
         }
-        h1 {
-            color: var(--primary);
-            margin: 0;
-            font-size: 1.5rem;
-        }
+        h1 { color: var(--primary); margin: 0; font-size: 1.5rem; }
         .user-status {
-            background-color: #065f46;
-            color: #34d399;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: bold;
+            background-color: #065f46; color: #34d399; padding: 5px 12px;
+            border-radius: 20px; font-weight: bold; font-size: 0.9rem;
         }
         .card {
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
+            background-color: var(--card-bg); padding: 25px; border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); margin-bottom: 20px; border: 1px solid var(--border-color);
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #cbd5e1;
-        }
-        input[type="text"], select, textarea {
-            width: 100%;
-            padding: 14px;
-            border-radius: 8px;
-            border: 1px solid #341555;
-            background-color: #090d16;
-            color: white;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            box-sizing: border-box;
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #cbd5e1; }
+        input[type="text"], select {
+            width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #334155;
+            background-color: #090d16; color: white; font-size: 1rem; margin-bottom: 20px; box-sizing: border-box;
         }
         button {
             background: linear-gradient(135deg, var(--primary), var(--primary-hover));
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
-            font-size: 1rem;
-            transition: opacity 0.3s;
+            color: white; border: none; padding: 14px 20px; border-radius: 8px;
+            cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; transition: opacity 0.3s;
         }
         button:hover { opacity: 0.9; }
         .output-box {
-            background-color: #090d16;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 5px solid var(--accent);
-            white-space: pre-wrap;
-            margin-top: 15px;
-            font-family: monospace;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #e2e8f0;
-            max-height: 450px;
-            overflow-y: auto;
+            background-color: #090d16; padding: 20px; border-radius: 8px;
+            border-left: 5px solid var(--accent); white-space: pre-wrap; margin-top: 15px;
+            font-family: monospace; font-size: 0.95rem; line-height: 1.6; color: #e2e8f0; max-height: 500px; overflow-y: auto;
         }
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        .action-btn {
-            background-color: var(--accent);
-            color: white;
-            padding: 10px 15px;
-            font-size: 14px;
-            width: auto;
-        }
-        .download-btn {
-            background-color: #38bdf8;
-            color: black;
-            padding: 10px 15px;
-            font-size: 14px;
-            width: auto;
-        }
-        .sample-btn {
-            background-color: #f59e0b;
-            color: black;
-            padding: 10px 14px;
-            font-size: 14px;
-            width: auto;
-            margin-bottom: 15px;
-        }
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .action-btn { background-color: var(--accent); color: white; padding: 10px 15px; font-size: 14px; width: auto; }
+        .download-btn { background-color: #38bdf8; color: black; padding: 10px 15px; font-size: 14px; width: auto; }
+        .sample-btn { background-color: #f59e0b; color: black; padding: 10px 14px; font-size: 14px; width: auto; margin-bottom: 15px; }
         #toast {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #10b981;
-            color: white;
-            text-align: center;
-            border-radius: 8px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1000;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            visibility: hidden; min-width: 250px; background-color: #10b981; color: white;
+            text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 1000;
+            left: 50%; bottom: 30px; transform: translateX(-50%); box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-        #loadingOverlay {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            color: var(--accent);
-            font-weight: bold;
-        }
+        #loadingOverlay { display: none; text-align: center; padding: 20px; color: var(--accent); font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>MM Recap Studio</h1>
-            <div class="user-status" id="userBadge">VIP Member (No VPN / Fast 3m)</div>
+            <div class="user-status">VIP Locked & Optimized</div>
         </header>
 
         <div class="card">
-            <h2>🔑 ကိုယ်ပိုင် Gemini API Key (Error လုံးဝမတက်စေရန်):</h2>
-            <label>API Key ထည့်ရန်:</label>
+            <h2>🔑 Gemini API Key:</h2>
             <input type="text" id="apiKeyInput" placeholder="AIza... (သို့မဟုတ်) AQ.... ဖြင့်စသော Key ထည့်ပါ">
         </div>
 
         <div class="card">
             <button class="sample-btn" onclick="loadSample()">⚡ Sample Demo ဖြည့်ရန်</button>
-            <label for="storyTitle">ဇာတ်လမ်း ခေါင်းစဉ် (သဇင် သို့မဟုတ် အကြောင်းအရာ):</label>
+            <label for="storyTitle">ဇာတ်လမ်း ခေါင်းစဉ်:</label>
             <input type="text" id="storyTitle" placeholder="ဥပမာ - ရွာစွန်က လျှို့ဝှက်ဆန်းကြယ် တောအုပ်ကြီး">
             
-            <label for="charName">ဇာတ်ကောင် အမည်နှင့် ပုံစံ (Character DNA Lock):</label>
-            <input type="text" id="charName" placeholder="ဥပမာ - U Ba, old wise man with walking stick">
+            <label for="charName">ဇာတ်ကောင် အမည်နှင့် တိကျသော ပုံစံ (Character DNA Lock):</label>
+            <input type="text" id="charName" placeholder="ဥပမာ - U Ba, old wise man with walking stick, grey beard, green longyi">
             
-            <label for="voiceStyle">အသံသွင်းဟန်နှင့် ဘာသာစကား စတိုင် (Voice Style & Tone):</label>
-            <select id="voiceStyle">
-                <option value="Standard Storytelling">Standard Storytelling (ဆွဲဆောင်မှုရှိသော & ဇာတ်ကြောင်းပြော)</option>
-                <option value="Action & Exciting">Action & Exciting (စိတ်လှုပ်ရှားစရာ & Fast & Exciting)</option>
-            </select>
-
-            <label for="sceneCount">လိုချင်သော ဇာတ်ကွက် အပိုင်းအရေအတွက် (Scene Count):</label>
+            <label for="sceneCount">လိုချင်သော ဇာတ်ကွက် အပိုင်းအရေအတွက်:</label>
             <select id="sceneCount">
-                <option value="5">Scene 5 ခု (အမြန်ဆုံး - VIP အပါအဝင်)</option>
-                <option value="10">Scene 10 ခု (အသင့်အတင့်)</option>
-                <option value="15">Scene 15 ခု (အပြည့်အစုံ - VIP သီးသန့်)</option>
+                <option value="5">Scene 5 ခု</option>
+                <option value="10" selected>Scene 10 ခု (တိကျသေချာသော အသေးစိတ်)</option>
+                <option value="15">Scene 15 ခု</option>
             </select>
 
             <label for="visualStyle">ဗွီဒီယို ပုံစံစတိုင် (Visual Style):</label>
             <select id="visualStyle">
-                <option value="3D Pixar / Disney Animation">3D ပစ်ဆာ (3D Pixar / Disney Animation)</option>
-                <option value="3D Cinematic Cartoon">3D ရုပ်ရှင်ဆန်ဆန် (3D Cinematic Cartoon)</option>
-                <option value="2D Anime / Manga">2D အန်နီမေးရှင်း (2D Anime / Manga)</option>
-                <option value="Cinematic Live Action">ရုပ်ရှင်ဆန်ဆန် တိုက်ရိုက်ရိုက်ကူးမှု (Cinematic Live Action)</option>
+                <option value="3D Pixar / Disney Animation">3D Pixar / Disney Animation</option>
+                <option value="3D Cinematic Cartoon">3D Cinematic Cartoon</option>
+                <option value="2D Anime / Manga">2D Anime / Manga</option>
             </select>
 
-            <button onclick="startAutoRecap()">⚡ SRD ဖိုင်များ အလိုအလျောက် ထုတ်မည်</button>
+            <button onclick="startAutoRecap()">⚡ Error ကင်းစင်သော SRD ဖိုင်များ ထုတ်မည်</button>
         </div>
 
         <div id="loadingOverlay">
-            <p id="loadingText">⚡ VIP Speed: ၃ မိနစ်အောက်ဖြင့် SRD ဖိုင်များကို တည်ဆောက်နေပြီ...</p>
+            <p>⚡ ဇာတ်ကောင်နှင့် အသံပိုင်းဆိုင်ရာ တိကျစွာ ခွဲခြားသတ်မှတ်ထားသော SRD များကို တည်ဆောက်နေပါပြီ...</p>
         </div>
 
         <div class="card" id="resultCard" style="display: none;">
-            <h2>📄 ထွက်လာသော SRD (Script & Recap Studio)</h2>
+            <h2>📄 ထွက်လာသော Locked SRD ဇာတ်ညွှန်း</h2>
             <div class="output-box" id="outputContent"></div>
             <div class="btn-group">
                 <button class="action-btn" onclick="copyResult()">📋 Copy ကူးမည်</button>
@@ -215,21 +121,15 @@
     <div id="toast">🎉 အောင်မြင်စွာ ဆောင်ရွက်ပြီးပါပြီ။</div>
 
     <script>
-        const isVIP = true; // အမြဲတမ်း VIP ဖြစ်စေရန်
-
         window.onload = function() {
             try {
                 const savedKey = localStorage.getItem('mm_recap_gemini_key');
-                if(savedKey) {
-                    document.getElementById('apiKeyInput').value = savedKey;
-                }
+                if(savedKey) document.getElementById('apiKeyInput').value = savedKey;
             } catch(e) {}
         };
 
         document.getElementById('apiKeyInput').addEventListener('input', function() {
-            try {
-                localStorage.setItem('mm_recap_gemini_key', this.value.trim());
-            } catch(e) {}
+            try { localStorage.setItem('mm_recap_gemini_key', this.value.trim()); } catch(e) {}
         });
 
         function showToast(msg) {
@@ -241,103 +141,77 @@
 
         function loadSample() {
             document.getElementById('storyTitle').value = "ရွာစွန်က လျှို့ဝှက်ဆန်းကြယ် တောအုပ်ကြီး";
-            document.getElementById('charName').value = "U Ba, old wise man with walking stick";
+            document.getElementById('charName').value = "U Ba, old wise man with walking stick, grey beard, green longyi";
             showToast("✨ Sample Demo ထည့်ပြီးပါပြီ။");
         }
 
         function startAutoRecap() {
             const titleInput = document.getElementById('storyTitle');
-            const apiKeyInput = document.getElementById('apiKeyInput');
-            const sceneCountSelect = document.getElementById('sceneCount');
-
-            if(!titleInput || !apiKeyInput || !sceneCountSelect) return;
-
-            const title = titleInput.value.trim();
-            const apiKey = apiKeyInput.value.trim();
-            const sceneCount = parseInt(sceneCountSelect.value);
-
-            if(!title) {
+            if(!titleInput.value.trim()) {
                 alert('⚠️ ကျေးဇူးပြု၍ ဇာတ်လမ်း အကြောင်းအရာ ထည့်ပါ');
                 titleInput.focus();
                 return;
             }
-
-            if(apiKey && !apiKey.startsWith('AIza') && !apiKey.startsWith('AQ.')) {
-                alert('❌ ထည့်သွင်းထားသော Gemini API Key ပုံစံ မမှန်ကန်ပါ။ "AIza" (သို့) "AQ." ဖြင့် စတင်ရပါမည်။ ကျေးဇူးပြု၍ ပြန်စစ်ပါ။');
-                apiKeyInput.focus();
-                return;
-            }
-
-            const loading = document.getElementById('loadingOverlay');
-            const resultCard = document.getElementById('resultCard');
-
-            if(resultCard) resultCard.style.display = 'none';
-            if(loading) loading.style.display = 'block';
+            document.getElementById('loadingOverlay').style.display = 'block';
+            document.getElementById('resultCard').style.display = 'none';
 
             setTimeout(() => {
-                if(loading) loading.style.display = 'none';
-                generateContent();
-            }, 1500);
+                document.getElementById('loadingOverlay').style.display = 'none';
+                generateLockedContent();
+            }, 1000);
         }
 
-        function generateContent() {
+        function generateLockedContent() {
             const title = document.getElementById('storyTitle').value.trim();
             const charName = document.getElementById('charName').value.trim() || 'Main Character';
             const style = document.getElementById('visualStyle').value;
-            const voiceStyle = document.getElementById('voiceStyle').value;
             const sceneCount = parseInt(document.getElementById('sceneCount').value);
 
-            let resultText = `========================================\n`;
-            resultText += `MM RECAP SRD (SCRIPT & PRODUCTION DATA) MASTER FILE\n`;
-            resultText += `========================================\n`;
-            resultText += `🎬 ဇာတ်လမ်းခေါင်းစဉ်: ${title}\n`;
-            resultText += `🧬 ဇာတ်ကောင် DNA Lock: ${charName}\n`;
-            resultText += `🎨 Visual Style: ${style}\n`;
-            resultText += `🎙️ အသံသွင်းဟန် & ဘာသာစကား စတိုင်: ${voiceStyle}\n`;
-            resultText += `⏱️ Video Motion Prompt: Cinematic smooth camera motion, high emotional depth, 24fps.\n`;
-            resultText += `📱 TIKTOK VIRAL HOOK & TITLE SUITE ---\n`;
-            resultText += `1. Trending Titles: "ဒီဇာတ်လမ်းကို မသိသေးရင် အရမ်းနာောင်တယ်"\n`;
-            resultText += `2. 3-Second Viral Hook: "ဒီဗွီဒီယိုကို ကြည့်ပြီးနောက်မှာ သင့်ဘဝကြီးကို အလှည့်အပြောင်းလုပ်သွားမယ့်အရာ..."\n`;
-            resultText += `========================================\n`;
-            resultText += `--- DETAILED SRD SCENE BLUEPRINTS ---\n`;
-            resultText += `========================================\n\n`;
+            let text = `========================================\n`;
+            text += `MM RECAP LOCKED & ERROR-FREE SRD MASTER\n`;
+            text += `========================================\n`;
+            text += `🎬 ဇာတ်လမ်းခေါင်းစဉ်: ${title}\n`;
+            text += `🧬 ဇာတ်ကောင် DNA Lock (Strict): ${charName} [Maintain exact character model, fixed outfit, stable scale]\n`;
+            text += `🎨 Visual Style: ${style} [Strict consistency, fixed environment ratio]\n`;
+            text += `⏱️ Video Motion Prompt: Cinematic smooth camera motion, fixed composition, no random warping, 24fps.\n`;
+            text += `========================================\n\n`;
+
+            const phases = [
+                "တောစပ်တွင် ပထမဆုံး စတင်ခြေချပြီး ပတ်ဝန်းကျင်ကို သတိထား စူးစမ်းနေခြင်း။",
+                "လျှို့ဝှက်ချက်ကို ညွှန်ပြနေသည့် ရှေးဟောင်းအမှတ်အသား သို့မဟုတ် ပစ္စည်းကို တွေ့ရှိခြင်း။",
+                "တောအုပ်အတွင်းသို့ ပိုမိုနက်ရှိုင်းစွာ တိုးဝင်လာစဉ် ထူးဆန်းသော အဖြစ်အပျက်နှင့် ကြုံတွေ့ရခြင်း။",
+                "ကြုံတွေ့ရသည့် အတားအဆီးကို မိမိ၏ ဉာဏ်ပညာဖြင့် တည်ငြိမ်စွာ ရင်ဆိုင်ဖြေရှင်းခြင်း။",
+                "ဇာတ်လမ်း၏ အဓိက အဖြေပေါ်ထွက်လာပြီး နောက်ဆက်တွဲ အခြေအနေသို့ ရောက်ရှိခြင်း။"
+            ];
 
             for(let i = 1; i <= sceneCount; i++) {
-                resultText += `[SCENE ${i} of ${sceneCount} - SRD DATA BLOCK]\n`;
-                resultText += `----------------------------------------\n`;
-                resultText += `📸 Visual Prompt / Storyboard Action: ${style} of ${title}, featuring ${charName}, showing key narrative action for scene ${i}, dramatic lighting, 8k resolution.\n`;
-                resultText += `🎙️ Voiceover Narration (${voiceStyle}): ဒီဇာတ်ကွက်မှာတော့ ${charName} ဟာ ဇာတ်လမ်းရဲ့ အရေးကြီးတဲ့ အလှည့်အပြောင်းတစ်ခုကို ရင်ဆိုင်နေရပါတယ်။ (အပိုင်း - ${i})\n\n`;
+                let phaseDesc = phases[(i - 1) % phases.length];
+                text += `[SCENE ${i} of ${sceneCount} - LOCKED DATA BLOCK]\n`;
+                text += `----------------------------------------\n`;
+                text += `📸 Visual Prompt (Fixed Scale & Model): ${style} of ${title}, featuring strict character model of ${charName}, ${phaseDesc}, identical features, stable background proportions, dramatic lighting, 8k resolution.\n`;
+                text += `🎥 Camera Motion: Controlled slow dolly shot, zero camera distortion, stable framing.\n`;
+                text += `🎙️ [AUDIO TRACK 1] Background Voiceover Narration (Strictly separate from dialogue): ဒီဇာတ်ကွက်မှာတော့ ${charName} ဟာ ${phaseDesc} ဇာတ်လမ်းရဲ့ အရေးပါတဲ့ အဆင့်တစ်ရပ်ကို ဖြတ်သန်းနေပါတယ်။ (အပိုင်း - ${i})\n`;
+                text += `💬 [AUDIO TRACK 2] Character Dialogue Only: "${charName}: ဒီနေရာက အခြေအနေတွေက တကယ်ကို ထူးဆန်းနေပြီပဲ..."\n\n`;
             }
 
-            const outputContent = document.getElementById('outputContent');
-            const resultCard = document.getElementById('resultCard');
-
-            if(outputContent && resultCard) {
-                outputContent.innerText = resultText;
-                resultCard.style.display = 'block';
-                showToast("🎉 SRD ဖိုင်များ အောင်မြင်စွာ ထွက်ရှိလာပါပြီ!");
-            }
+            document.getElementById('outputContent').innerText = text;
+            document.getElementById('resultCard').style.display = 'block';
+            showToast("🎉 တိကျသေချာသော Error ကင်းစင်သည့် ဇာတ်ညွှန်းများ ထွက်လာပါပြီ!");
         }
 
         function copyResult() {
-            const outputContent = document.getElementById('outputContent');
-            if(!outputContent) return;
-            navigator.clipboard.writeText(outputContent.innerText).then(() => {
-                showToast("📋 Prompts များကို ကူးယူပြီးပါပြီ");
-            }).catch(err => {
-                alert('❌ ကူးယူ၍ မရပါ။');
+            navigator.clipboard.writeText(document.getElementById('outputContent').innerText).then(() => {
+                showToast("📋 ကူးယူပြီးပါပြီ");
             });
         }
 
         function downloadTxt() {
-            const outputContent = document.getElementById('outputContent');
-            if(!outputContent) return;
-            const blob = new Blob([outputContent.innerText], { type: 'text/plain;charset=utf-8' });
+            const blob = new Blob([document.getElementById('outputContent').innerText], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `MM_Recap_SRD_Master.txt`;
+            link.download = `MM_Recap_Locked_SRD.txt`;
             link.click();
-            showToast("📥 SRD .txt ဖိုင် Download ဆွဲပြီးပါပြီ");
+            showToast("📥 Download ဆွဲပြီးပါပြီ");
         }
     </script>
 </body>
