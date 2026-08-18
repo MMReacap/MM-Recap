@@ -58,6 +58,12 @@
         }
         textarea { height: 110px; resize: none; }
 
+        .template-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .chip {
+            background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color);
+            padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;
+        }
+
         .generate-btn {
             background: var(--header-gradient); color: white; border: none; width: 100%;
             padding: 16px; border-radius: 14px; font-size: 1.05rem; font-weight: bold; cursor: pointer;
@@ -135,10 +141,54 @@
             <h1>Shape your vision</h1>
             
             <label>What are we making?</label>
-            <textarea id="storyIdea" placeholder="မြန်မာဇာတ်လမ်း၊ ဇာတ်ကောင်၊ နေရာ၊ ဖြစ်ရပ်များကို ရေးပါ။"></textarea>
+            <textarea id="storyIdea" placeholder="မြန်မာဇာတ်လမ်း၊ ဇာတ်ကောင်/တိရစ္ဆာန်၊ နေရာ၊ ဖြစ်ရပ်များကို ရေးပါ။"></textarea>
             
+            <label style="font-size: 0.8rem; color: var(--primary);">⚡ အသင့်သုံး ဇာတ်လမ်း ပုံစံခွဲများ (Templates)</label>
+            <div class="template-chips">
+                <div class="chip" onclick="useTemplate('ရွာစွန်က လျှို့ဝှက်ဆန်းကြယ် တောအုပ်ကြီး၊ သက်ကြီးရွယ်အို ဆရာကြီးတစ်ဦး ပါဝင်သော 3D ဇာတ်လမ်း')">🌲 တောအုပ်ဆန်းကြယ်</div>
+                <div class="chip" onclick="useTemplate('အာကာသ စူးစမ်းရှာဖွေရေး အဖွဲ့တစ်ဖွဲ့ ဂြိုဟ်အသစ်တစ်ခုပေါ်သို့ ဆင်းသက်ခြင်း')">🚀 အာကာသစွန့်စားခန်း</div>
+            </div>
+
             <label>Character DNA / Reference Lock</label>
-            <input type="text" id="charDNA" placeholder="ဥပမာ - U Ba, old wise man, green longyi">
+            <input type="text" id="charDNA" placeholder="ဥပမာ - U Ba, old wise man with walking stick, grey beard, green longyi">
+
+            <label>Visual Style</label>
+            <select id="visualStyle">
+                <option value="Stylized 3D cinematic">Stylized 3D cinematic</option>
+                <option value="Disney Pixar-inspired 3D">Disney Pixar-inspired 3D</option>
+                <option value="Hyper-realistic cinematic">Hyper-realistic cinematic</option>
+            </select>
+
+            <label>Emotional Tone</label>
+            <select id="emotionalTone">
+                <option value="Warm and inspiring">Warm and inspiring</option>
+                <option value="Tense and suspenseful">Tense and suspenseful</option>
+            </select>
+
+            <label>Aspect Ratio</label>
+            <select id="aspectRatio">
+                <option value="16:9 • YouTube">16:9 • YouTube</option>
+                <option value="9:16 • Shorts / TikTok">9:16 • Shorts / TikTok</option>
+            </select>
+
+            <label>Scene Count</label>
+            <select id="sceneCount">
+                <option value="3 scenes">3 scenes</option>
+                <option value="4 scenes" selected>4 scenes</option>
+                <option value="6 scenes">6 scenes</option>
+            </select>
+
+            <label>Voiceover Mode</label>
+            <select id="voiceoverMode">
+                <option value="Mixed">Mixed (Voiceover + Dialogue)</option>
+                <option value="Narrator">Narrator</option>
+            </select>
+
+            <label>Output Language</label>
+            <select id="outputLang">
+                <option value="Burmese + English prompts">Burmese + English prompts</option>
+                <option value="Burmese">Burmese</option>
+            </select>
 
             <button class="generate-btn" onclick="generateBlueprint()">✨ Generate strict continuity blueprint →</button>
         </div>
@@ -172,6 +222,11 @@
                 applyVIPUI();
             }
         };
+
+        function useTemplate(text) {
+            document.getElementById('storyIdea').value = text;
+            showToast("⚡ ဇာတ်လမ်း နမူနာ ထည့်ပြီးပါပြီ။");
+        }
 
         function saveApiKey() {
             const key = document.getElementById('apiKeyInput').value.trim();
@@ -216,6 +271,12 @@
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
             const charDNA = document.getElementById('charDNA').value.trim();
+            const style = document.getElementById('visualStyle').value;
+            const tone = document.getElementById('emotionalTone').value;
+            const ratio = document.getElementById('aspectRatio').value;
+            const count = document.getElementById('sceneCount').value;
+            const voice = document.getElementById('voiceoverMode').value;
+            const lang = document.getElementById('outputLang').value;
 
             if(!apiKey) { alert('⚠️ API Key ထည့်ပါ။'); return; }
             if(!idea) { alert('⚠️ ဇာတ်လမ်း အကြောင်းအရာ ရေးပါ။'); return; }
@@ -223,10 +284,17 @@
             showToast("✨ AI ဖြင့် ဖန်တီးနေပါပြီ...");
 
             try {
-                const promptText = `Create a professional movie production blueprint and image prompts for: ${idea}. Character DNA: ${charDNA}`;
+                const promptText = `Act as an expert AI video director. Create a professional movie production blueprint based on this brief:
+Story: ${idea}
+Character DNA: ${charDNA}
+Visual Style: ${style}
+Tone: ${tone}
+Aspect Ratio: ${ratio}
+Scene Count: ${count}
+Voiceover: ${voice}
+Language: ${lang}`;
 
-                // အဓိကပြင်ဆင်လိုက်သော နေရာ (gemini-3.7-flash သုံးထားပါသည်)
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?key=${apiKey}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
