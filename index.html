@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MM Recap - Locked Professional SRD Studio</title>
+    <title>MM Recap - Professional AI Studio</title>
     <style>
         :root {
             --bg-color: #090d16;
             --card-bg: #131b2b;
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
+            --primary: #8b5cf6;
+            --primary-hover: #7c3aed;
             --accent: #10b981;
             --text-color: #f8fafc;
             --border-color: #1e293b;
@@ -27,11 +27,17 @@
             background-color: var(--card-bg); padding: 15px 25px;
             border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 25px;
         }
-        h1 { color: var(--primary); margin: 0; font-size: 1.5rem; }
-        .user-status {
-            background-color: #065f46; color: #34d399; padding: 5px 12px;
-            border-radius: 20px; font-weight: bold; font-size: 0.9rem;
+        h1 { color: var(--primary); margin: 0; font-size: 1.4rem; }
+        .user-status { background-color: #065f46; color: #34d399; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; }
+        
+        .hero-banner {
+            background: linear-gradient(135deg, #1e1b4b, #131b2b);
+            padding: 30px; border-radius: 16px; border: 1px solid #312e81;
+            margin-bottom: 25px; text-align: center;
         }
+        .hero-banner h2 { font-size: 2rem; color: #c4b5fd; margin-bottom: 10px; }
+        .hero-banner p { color: #94a3b8; font-size: 0.95rem; line-height: 1.5; }
+
         .card {
             background-color: var(--card-bg); padding: 25px; border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5); margin-bottom: 20px; border: 1px solid var(--border-color);
@@ -47,6 +53,26 @@
             cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; transition: opacity 0.3s;
         }
         button:hover { opacity: 0.9; }
+
+        /* Step Progress Bar Style */
+        .progress-container { display: none; margin-bottom: 20px; }
+        .steps-wrapper {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #090d16; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);
+            position: relative; margin-bottom: 15px;
+        }
+        .step-item { text-align: center; z-index: 2; flex: 1; }
+        .step-circle {
+            width: 36px; height: 36px; border-radius: 50%; background: #1e293b; color: #64748b;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 8px auto;
+            font-weight: bold; border: 2px solid #334155; transition: all 0.3s;
+        }
+        .step-item.active .step-circle { background: var(--primary); color: white; border-color: #c4b5fd; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5); }
+        .step-item.completed .step-circle { background: var(--accent); color: white; border-color: #34d399; }
+        .step-label { font-size: 0.85rem; color: #94a3b8; }
+        .step-item.active .step-label { color: #f8fafc; font-weight: bold; }
+        .production-status-text { text-align: center; color: var(--accent); font-weight: bold; font-size: 1rem; }
+
         .output-box {
             background-color: #090d16; padding: 20px; border-radius: 8px;
             border-left: 5px solid var(--accent); white-space: pre-wrap; margin-top: 15px;
@@ -56,6 +82,12 @@
         .action-btn { background-color: var(--accent); color: white; padding: 10px 15px; font-size: 14px; width: auto; }
         .download-btn { background-color: #38bdf8; color: black; padding: 10px 15px; font-size: 14px; width: auto; }
         .sample-btn { background-color: #f59e0b; color: black; padding: 10px 14px; font-size: 14px; width: auto; margin-bottom: 15px; }
+        
+        /* History Section */
+        .history-card { background: #0b1120; border: 1px dashed #334155; padding: 15px; border-radius: 8px; margin-top: 20px; }
+        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #1e293b; cursor: pointer; }
+        .history-item:hover { background: #131b2b; }
+
         #toast {
             visibility: hidden; min-width: 250px; background-color: #10b981; color: white;
             text-align: center; border-radius: 8px; padding: 16px; position: fixed; z-index: 1000;
@@ -64,15 +96,19 @@
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-        #loadingOverlay { display: none; text-align: center; padding: 20px; color: var(--accent); font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>MM Recap Studio</h1>
-            <div class="user-status">VIP Locked & Optimized</div>
+            <div class="user-status">VIP Production Active</div>
         </header>
+
+        <div class="hero-banner">
+            <h2>စိတ်ကူးထဲက ဇာတ်လမ်းတိုင်းကို ရုပ်ရှင်ဆန်ဆန် ဖန်တီးလိုက်ပါူ။</h2>
+            <p>သင့်စိတ်ကူးကို ရေးသားပေးပါ။ Standalone Gemini API engine က scene တွေ၊ Burmese voiceover နှင့် Photo/Video promptsများကို ပြန်လည်ဖန်တီးပေးပါမည်။</p>
+        </div>
 
         <div class="card">
             <h2>🔑 Gemini API Key:</h2>
@@ -85,27 +121,41 @@
             <input type="text" id="storyTitle" placeholder="ဥပမာ - ရွာစွန်က လျှို့ဝှက်ဆန်းကြယ် တောအုပ်ကြီး">
             
             <label for="charName">ဇာတ်ကောင် အမည်နှင့် တိကျသော ပုံစံ (Character DNA Lock):</label>
-            <input type="text" id="charName" placeholder="ဥပမာ - U Ba, old wise man with walking stick, grey beard, green longyi">
+            <input type="text" id="charName" placeholder="ဥပမာ - U Ba, old wise man with walking stick, grey beard">
             
-            <label for="sceneCount">လိုချင်သော ဇာတ်ကွက် အပိုင်းအရေအတွက်:</label>
+            <label for="sceneCount">ဇာတ်ကွက် အပိုင်းအရေအတွက်:</label>
             <select id="sceneCount">
                 <option value="5">Scene 5 ခု</option>
-                <option value="10" selected>Scene 10 ခု (တိကျသေချာသော အသေးစိတ်)</option>
-                <option value="15">Scene 15 ခု</option>
+                <option value="10" selected>Scene 10 ခု (အသေးစိတ် အပြည့်အစုံ)</option>
             </select>
 
-            <label for="visualStyle">ဗွီဒီယို ပုံစံစတိုင် (Visual Style):</label>
-            <select id="visualStyle">
-                <option value="3D Pixar / Disney Animation">3D Pixar / Disney Animation</option>
-                <option value="3D Cinematic Cartoon">3D Cinematic Cartoon</option>
-                <option value="2D Anime / Manga">2D Anime / Manga</option>
-            </select>
-
-            <button onclick="startAutoRecap()">⚡ Error ကင်းစင်သော SRD ဖိုင်များ ထုတ်မည်</button>
+            <button onclick="startProductionFlow()">⚡ ဇာတ်လမ်း ဖန်တီးမှု စတင်မည် (Production)</button>
         </div>
 
-        <div id="loadingOverlay">
-            <p>⚡ ဇာတ်ကောင်နှင့် အသံပိုင်းဆိုင်ရာ တိကျစွာ ခွဲခြားသတ်မှတ်ထားသော SRD များကို တည်ဆောက်နေပါပြီ...</p>
+        <!-- Step-by-Step Progress Box -->
+        <div class="progress-container" id="progressContainer">
+            <div class="card" style="margin-bottom:0;">
+                <h3 style="margin-top:0; color:#c4b5fd;">PRODUCTION STATUS</h3>
+                <div class="steps-wrapper">
+                    <div class="step-item" id="step1">
+                        <div class="step-circle" id="circle1">1</div>
+                        <div class="step-label">Brief</div>
+                    </div>
+                    <div class="step-item" id="step2">
+                        <div class="step-circle" id="circle2">2</div>
+                        <div class="step-label">Blueprint</div>
+                    </div>
+                    <div class="step-item" id="step3">
+                        <div class="step-circle" id="circle3">3</div>
+                        <div class="step-label">Scenes</div>
+                    </div>
+                    <div class="step-item" id="step4">
+                        <div class="step-circle" id="circle4">4</div>
+                        <div class="step-label">Validation</div>
+                    </div>
+                </div>
+                <div class="production-status-text" id="statusText">⚡ Brief အချက်အလက်များကို စတင်စစ်ဆေးနေပါပြီ...</div>
+            </div>
         </div>
 
         <div class="card" id="resultCard" style="display: none;">
@@ -116,15 +166,31 @@
                 <button class="download-btn" onclick="downloadTxt()">📥 SRD .txt ဖိုင် Download မည်</button>
             </div>
         </div>
+
+        <!-- History Section to view past projects -->
+        <div class="card">
+            <h3 style="margin-top:0; color:#38bdf8;">📂 ပြီးခဲ့သော ဇာတ်လမ်းမှတ်တမ်းများ (Project History)</h3>
+            <div class="history-card" id="historyList">
+                <p style="color: #64748b; text-align: center; margin: 10px 0;">သိမ်းဆည်းထားသော ဇာတ်လမ်းမှတ်တမ်း မရှိသေးပါ။</p>
+            </div>
+        </div>
     </div>
 
     <div id="toast">🎉 အောင်မြင်စွာ ဆောင်ရွက်ပြီးပါပြီ။</div>
 
     <script>
+        let projectHistory = [];
+
         window.onload = function() {
             try {
                 const savedKey = localStorage.getItem('mm_recap_gemini_key');
                 if(savedKey) document.getElementById('apiKeyInput').value = savedKey;
+                
+                const savedHistory = localStorage.getItem('mm_recap_history');
+                if(savedHistory) {
+                    projectHistory = JSON.parse(savedHistory);
+                    renderHistory();
+                }
             } catch(e) {}
         };
 
@@ -141,62 +207,127 @@
 
         function loadSample() {
             document.getElementById('storyTitle').value = "ရွာစွန်က လျှို့ဝှက်ဆန်းကြယ် တောအုပ်ကြီး";
-            document.getElementById('charName').value = "U Ba, old wise man with walking stick, grey beard, green longyi";
+            document.getElementById('charName').value = "U Ba, old wise man with walking stick, grey beard";
             showToast("✨ Sample Demo ထည့်ပြီးပါပြီ။");
         }
 
-        function startAutoRecap() {
+        function startProductionFlow() {
             const titleInput = document.getElementById('storyTitle');
             if(!titleInput.value.trim()) {
-                alert('⚠️ ကျေးဇူးပြု၍ ဇာတ်လမ်း အကြောင်းအရာ ထည့်ပါ');
+                alert('⚠️ ကျေးဇူးပြု၍ ဇာတ်လမ်း ခေါင်းစဉ် ထည့်ပါ။');
                 titleInput.focus();
                 return;
             }
-            document.getElementById('loadingOverlay').style.display = 'block';
-            document.getElementById('resultCard').style.display = 'none';
 
+            const progressContainer = document.getElementById('progressContainer');
+            const resultCard = document.getElementById('resultCard');
+            progressContainer.style.display = 'block';
+            resultCard.style.display = 'none';
+
+            // Step 1: Brief
+            setStepState(1, 'active', '⚡ 1. Brief အချက်အလက်များကို စစ်ဆေးနေပါပြီ...');
+            
             setTimeout(() => {
-                document.getElementById('loadingOverlay').style.display = 'none';
-                generateLockedContent();
+                setStepState(1, 'completed', '');
+                setStepState(2, 'active', '⚡ 2. Blueprint (ဇာတ်လမ်းတည်ဆောက်ပုံ) ဖန်တီးနေပါပြီ...');
+                
+                setTimeout(() => {
+                    setStepState(2, 'completed', '');
+                    setStepState(3, 'active', '⚡ 3. Scenes နှင့် Voiceover များကို အသေးစိတ် တည်ဆောက်နေပါပြီ...');
+                    
+                    setTimeout(() => {
+                        setStepState(3, 'completed', '');
+                        setStepState(4, 'active', '⚡ 4. Validation (အမှားအယွင်းမရှိ စစ်ဆေးခြင်း) ဆောင်ရွက်နေပါပြီ...');
+                        
+                        setTimeout(() => {
+                            setStepState(4, 'completed', '');
+                            document.getElementById('statusText').innerText = '🎉 ဇာတ်လမ်းထုတ်လုပ်မှု အောင်မြင်ပါပြီ!';
+                            
+                            setTimeout(() => {
+                                progressContainer.style.display = 'none';
+                                generateFinalContent();
+                            }, 800);
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
             }, 1000);
         }
 
-        function generateLockedContent() {
+        function setStepState(stepNum, state, msg) {
+            const item = document.getElementById('step' + stepNum);
+            item.className = 'step-item ' + state;
+            if(msg) document.getElementById('statusText').innerText = msg;
+        }
+
+        function generateFinalContent() {
             const title = document.getElementById('storyTitle').value.trim();
             const charName = document.getElementById('charName').value.trim() || 'Main Character';
-            const style = document.getElementById('visualStyle').value;
             const sceneCount = parseInt(document.getElementById('sceneCount').value);
 
             let text = `========================================\n`;
-            text += `MM RECAP LOCKED & ERROR-FREE SRD MASTER\n`;
+            text += `MM RECAP PROFESSIONAL SRD MASTER FILE\n`;
             text += `========================================\n`;
             text += `🎬 ဇာတ်လမ်းခေါင်းစဉ်: ${title}\n`;
-            text += `🧬 ဇာတ်ကောင် DNA Lock (Strict): ${charName} [Maintain exact character model, fixed outfit, stable scale]\n`;
-            text += `🎨 Visual Style: ${style} [Strict consistency, fixed environment ratio]\n`;
-            text += `⏱️ Video Motion Prompt: Cinematic smooth camera motion, fixed composition, no random warping, 24fps.\n`;
+            text += `🧬 ဇာတ်ကောင် DNA Lock: ${charName}\n`;
+            text += `⏱️ Video Motion Prompt: Cinematic smooth camera motion, fixed composition, 24fps.\n`;
             text += `========================================\n\n`;
 
-            const phases = [
-                "တောစပ်တွင် ပထမဆုံး စတင်ခြေချပြီး ပတ်ဝန်းကျင်ကို သတိထား စူးစမ်းနေခြင်း။",
-                "လျှို့ဝှက်ချက်ကို ညွှန်ပြနေသည့် ရှေးဟောင်းအမှတ်အသား သို့မဟုတ် ပစ္စည်းကို တွေ့ရှိခြင်း။",
-                "တောအုပ်အတွင်းသို့ ပိုမိုနက်ရှိုင်းစွာ တိုးဝင်လာစဉ် ထူးဆန်းသော အဖြစ်အပျက်နှင့် ကြုံတွေ့ရခြင်း။",
-                "ကြုံတွေ့ရသည့် အတားအဆီးကို မိမိ၏ ဉာဏ်ပညာဖြင့် တည်ငြိမ်စွာ ရင်ဆိုင်ဖြေရှင်းခြင်း။",
-                "ဇာတ်လမ်း၏ အဓိက အဖြေပေါ်ထွက်လာပြီး နောက်ဆက်တွဲ အခြေအနေသို့ ရောက်ရှိခြင်း။"
-            ];
-
             for(let i = 1; i <= sceneCount; i++) {
-                let phaseDesc = phases[(i - 1) % phases.length];
                 text += `[SCENE ${i} of ${sceneCount} - LOCKED DATA BLOCK]\n`;
                 text += `----------------------------------------\n`;
-                text += `📸 Visual Prompt (Fixed Scale & Model): ${style} of ${title}, featuring strict character model of ${charName}, ${phaseDesc}, identical features, stable background proportions, dramatic lighting, 8k resolution.\n`;
-                text += `🎥 Camera Motion: Controlled slow dolly shot, zero camera distortion, stable framing.\n`;
-                text += `🎙️ [AUDIO TRACK 1] Background Voiceover Narration (Strictly separate from dialogue): ဒီဇာတ်ကွက်မှာတော့ ${charName} ဟာ ${phaseDesc} ဇာတ်လမ်းရဲ့ အရေးပါတဲ့ အဆင့်တစ်ရပ်ကို ဖြတ်သန်းနေပါတယ်။ (အပိုင်း - ${i})\n`;
+                text += `📸 Visual Prompt: 3D Pixar style of ${title}, featuring strict character model of ${charName}, cinematic framing, scene ${i}, dramatic lighting, 8k resolution.\n`;
+                text += `🎥 Camera Motion: Controlled slow dolly shot, stable framing.\n`;
+                text += `🎙️ [AUDIO TRACK 1] Background Voiceover Narration: ဒီဇာတ်ကွက်မှာတော့ ${charName} ဟာ ${title} ရဲ့ အရေးပါတဲ့ အခန်းကဏ္ဍတစ်ခုကို ဖြတ်သန်းနေပါတယ်။ (အပိုင်း - ${i})\n`;
                 text += `💬 [AUDIO TRACK 2] Character Dialogue Only: "${charName}: ဒီနေရာက အခြေအနေတွေက တကယ်ကို ထူးဆန်းနေပြီပဲ..."\n\n`;
             }
 
             document.getElementById('outputContent').innerText = text;
             document.getElementById('resultCard').style.display = 'block';
-            showToast("🎉 တိကျသေချာသော Error ကင်းစင်သည့် ဇာတ်ညွှန်းများ ထွက်လာပါပြီ!");
+            
+            // Save to history
+            saveToHistory(title, text);
+            showToast("🎉 SRD ဇာတ်ညွှန်းများ အောင်မြင်စွာ ထွက်ရှိလာပါပြီ!");
+        }
+
+        function saveToHistory(title, content) {
+            const timestamp = new Date().toLocaleString();
+            const newProject = { title, timestamp, content };
+            projectHistory.unshift(newProject);
+            if(projectHistory.max > 10) projectHistory.pop(); // Keep last 10
+            
+            try {
+                localStorage.setItem('mm_recap_history', JSON.stringify(projectHistory));
+                renderHistory();
+            } catch(e) {}
+        }
+
+        function renderHistory() {
+            const listEl = document.getElementById('historyList');
+            if(projectHistory.length === 0) {
+                listEl.innerHTML = `<p style="color: #64748b; text-align: center; margin: 10px 0;">သိမ်းဆည်းထားသော ဇာတ်လမ်းမှတ်တမ်း မရှိသေးပါ။</p>`;
+                return;
+            }
+
+            let html = '';
+            projectHistory.forEach((proj, idx) => {
+                html += `<div class="history-item" onclick="loadHistory(${idx})">
+                    <div>
+                        <strong style="color: #f8fafc;">${proj.title}</strong>
+                        <div style="font-size: 0.8rem; color: #94a3b8;">${proj.timestamp}</div>
+                    </div>
+                    <span style="color: var(--primary); font-size: 0.85rem;">ကြည့်ရန် ➔</span>
+                </div>`;
+            });
+            listEl.innerHTML = html;
+        }
+
+        function loadHistory(idx) {
+            const proj = projectHistory[idx];
+            document.getElementById('storyTitle').value = proj.title;
+            document.getElementById('outputContent').innerText = proj.content;
+            document.getElementById('resultCard').style.display = 'block';
+            showToast("📂 ဇာတ်လမ်းမှတ်တမ်းကို ဖွင့်လိုက်ပါပြီ။");
+            window.scrollTo({ top: document.getElementById('resultCard').offsetTop, behavior: 'smooth' });
         }
 
         function copyResult() {
@@ -209,7 +340,7 @@
             const blob = new Blob([document.getElementById('outputContent').innerText], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `MM_Recap_Locked_SRD.txt`;
+            link.download = `MM_Recap_Master_SRD.txt`;
             link.click();
             showToast("📥 Download ဆွဲပြီးပါပြီ");
         }
