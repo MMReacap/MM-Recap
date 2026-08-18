@@ -430,8 +430,13 @@
                 return;
             }
 
-            if(apiKey && !apiKey.startsWith('AIza')) {
-                alert('❌ ထည့်သွင်းထားသော Gemini API Key ပုံစံ မမှန်ကန်ပါ။ "AIza" ဖြင့် စတင်ရပါမည်။ ကျေးဇူးပြု၍ ပြန်စစ်ပါ။');
+            if(apiKey && !apiKey.startsWith('AIza') && !apiKey.startsWith('AQ.')) {
+  alert('❌ ထည့်သွင်းထားသော Gemini API Key ပုံစံ မမှန်ကန်ပါ။ "AIza" (သို့) "AQ." ဖြင့် စတင်ရပါမည်။ ကျေးဇူးပြု၍ ပြန်စစ်ပါ။');
+  apiKeyInput.focus();
+  return;
+}
+
+
                 apiKeyInput.focus();
                 return;
             }
