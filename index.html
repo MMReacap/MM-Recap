@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="my" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYANMAR STORY STUDIO - Ultimate VIP</title>
+    <title>MYANMAR STORY STUDIO - Ultimate VIP Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,21 +13,54 @@
             --primary-glow: rgba(147, 51, 234, 0.4);
             --accent: #10b981;
             --text-color: #f8fafc;
+            --text-muted: #94a3b8;
             --border-color: rgba(255, 255, 255, 0.08);
+            --input-bg: #171625;
         }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --primary: #7c3aed;
+            --primary-glow: rgba(124, 58, 237, 0.2);
+            --accent: #059669;
+            --text-color: #0f172a;
+            --text-muted: #64748b;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --input-bg: #f8fafc;
+        }
+
         body {
             font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
             padding: 20px;
+            transition: background 0.3s, color 0.3s;
         }
         .container { max-width: 600px; margin: 0 auto; }
         
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+        }
+        
+        .theme-toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            font-family: 'Pyidaungsu', sans-serif;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         .section-header {
             font-size: 0.85rem;
             letter-spacing: 1.5px;
-            color: #a855f7;
+            color: var(--primary);
             font-weight: bold;
             margin-bottom: 8px;
             text-transform: uppercase;
@@ -35,7 +68,7 @@
         
         h1 {
             font-size: 1.8rem;
-            color: #ffffff;
+            color: var(--text-color);
             margin-top: 0;
             margin-bottom: 20px;
             font-weight: 700;
@@ -47,14 +80,15 @@
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: background 0.3s, border 0.3s;
         }
 
         label {
             display: block;
             font-size: 0.9rem;
             font-weight: bold;
-            color: #cbd5e1;
+            color: var(--text-muted);
             margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -62,11 +96,11 @@
 
         textarea, select, input[type="text"] {
             width: 100%;
-            background-color: #171625;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 14px;
-            color: #ffffff;
+            color: var(--text-color);
             font-size: 0.95rem;
             font-family: 'Pyidaungsu', sans-serif;
             box-sizing: border-box;
@@ -79,6 +113,24 @@
             box-shadow: 0 0 15px var(--primary-glow);
         }
         textarea { height: 110px; resize: none; }
+
+        .template-chips {
+            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;
+        }
+        .chip {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
 
         .generate-btn {
             background: linear-gradient(135deg, #a855f7, #7e22ce);
@@ -101,33 +153,35 @@
         .remove-btn { background: #dc2626; color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Pyidaungsu', sans-serif; }
 
         .output-box {
-            background-color: #171625;
+            background-color: var(--input-bg);
             border-left: 4px solid var(--accent);
             padding: 15px;
             border-radius: 8px;
             font-family: monospace;
             font-size: 0.9rem;
             white-space: pre-wrap;
-            color: #e2e8f0;
+            color: var(--text-color);
             max-height: 400px;
             overflow-y: auto;
             margin-top: 15px;
         }
         
+        .export-group { display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap; }
+        .export-btn { background: var(--input-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: bold; cursor: pointer; font-family: 'Pyidaungsu', sans-serif; flex: 1; text-align: center; }
+
         .plan-card {
-            background: #171625;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 20px;
             margin-bottom: 15px;
         }
-        .plan-title { font-size: 1.2rem; font-weight: bold; color: #ffffff; margin-bottom: 5px; }
-        .plan-desc { font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px; }
-        .plan-features { font-size: 0.9rem; color: #cbd5e1; padding-left: 18px; margin-bottom: 15px; }
+        .plan-title { font-size: 1.2rem; font-weight: bold; color: var(--text-color); margin-bottom: 5px; }
+        .plan-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; }
+        .plan-features { font-size: 0.9rem; color: var(--text-color); padding-left: 18px; margin-bottom: 15px; }
         .plan-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--border-color);
+            color: var(--text-muted);
             width: 100%;
             padding: 12px;
             border-radius: 10px;
@@ -136,21 +190,21 @@
         }
 
         .history-item {
-            background: #171625;
+            background: var(--input-bg);
             padding: 12px 15px;
             border-radius: 10px;
             margin-bottom: 10px;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             transition: background 0.2s;
         }
-        .history-item:hover { background: #1e1d30; }
+        .history-item:hover { opacity: 0.8; }
 
         #toast {
             visibility: hidden; min-width: 250px; background: #10b981; color: white;
             text-align: center; border-radius: 10px; padding: 14px; position: fixed; z-index: 1000;
             left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         #toast.show { visibility: visible; animation: fadein 0.3s, fadeout 0.3s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
@@ -160,7 +214,11 @@
 <body>
     <div class="container">
         
-        <!-- API SETTINGS -->
+        <div class="top-bar">
+            <span style="font-weight: bold; color: var(--primary);">MM Story Studio</span>
+            <button class="theme-toggle-btn" onclick="toggleTheme()">🌓 Theme ပြောင်းမည်</button>
+        </div>
+
         <div class="card">
             <div class="section-header">API Configuration</div>
             <label>Gemini API Key</label>
@@ -171,7 +229,6 @@
             </div>
         </div>
 
-        <!-- 01 / CREATIVE BRIEF -->
         <div class="card">
             <div class="section-header">01 / Creative Brief</div>
             <h1>Shape your vision</h1>
@@ -179,6 +236,17 @@
             <label>What are we making?</label>
             <textarea id="storyIdea" placeholder="မြန်မာဇာတ်လမ်း၊ ဇာတ်ကောင်/တိရစ္ဆာန်၊ နေရာ၊ ဖြစ်ရပ်များ၊ voiceover နှင့် scene အရေအတွက်ကို ရေးပါ။"></textarea>
             
+            <label style="font-size: 0.8rem; color: var(--primary);">⚡ အသင့်သုံး ဇာတ်လမ်း ပုံစံခွဲများ (Templates)</label>
+            <div class="template-chips">
+                <div class="chip" onclick="useTemplate('ရွာစွန်က လျှို့ဝှက်ဆန်းကြယ် တောအုပ်ကြီး၊ သက်ကြီးရွယ်အို ဆရာကြီးတစ်ဦး ပါဝင်သော 3D ဇာတ်လမ်း')">🌲 တောအုပ်ဆန်းကြယ်</div>
+                <div class="chip" onclick="useTemplate('အာကာသ စူးစမ်းရှာဖွေရေး အဖွဲ့တစ်ဖွဲ့ ဂြိုဟ်အသစ်တစ်ခုပေါ်သို့ ဆင်းသက်ခြင်း')">🚀 အာကာသစွန့်စားခန်း</div>
+                <div class="chip" onclick="useTemplate('ရှေးခေတ် မြန်မာ့နန်းတွင်း သူရဲကောင်းတစ်ဦး၏ သစ္စာတရားနှင့် တိုက်ပွဲ')">⚔️ ရှေးခေတ်နန်းတွင်း</div>
+                <div class="chip" onclick="useTemplate('ချစ်စရာ တိရစ္ဆာန်လေးများ တောတွင်းခရီးထွက်ကြစဉ် ကြုံရသော ပျော်စရာအဖြစ်အပျက်များ')">🐾 တိရစ္ဆာန်ဟာသ</div>
+            </div>
+
+            <label>Character DNA / Reference Lock</label>
+            <input type="text" id="charDNA" placeholder="ဥပမာ - U Ba, old wise man with walking stick, grey beard, green longyi">
+
             <label>Visual Style</label>
             <select id="visualStyle">
                 <option value="Stylized 3D cinematic">Stylized 3D cinematic</option>
@@ -226,31 +294,30 @@
             <button class="generate-btn" onclick="generateBlueprint()">✨ Generate production blueprint →</button>
         </div>
 
-        <!-- 02 / PRODUCTION BLUEPRINT -->
         <div class="card" id="blueprintCard" style="display:none;">
             <div class="section-header">02 / Production Blueprint</div>
             <h1>Your creative direction</h1>
             <div class="output-box" id="outputContent"></div>
-            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                <button class="save-btn" style="flex:1;" onclick="copyResult()">📋 Copy Blueprint</button>
-                <button class="save-btn" style="flex:1; background:#0284c7;" onclick="downloadTxt()">📥 Download .txt</button>
+            <div class="export-group">
+                <button class="export-btn" onclick="copyResult()">📋 Copy</button>
+                <button class="export-btn" onclick="downloadTxt()">📥 .txt</button>
+                <button class="export-btn" onclick="downloadSrt()">📑 .srt</button>
+                <button class="export-btn" onclick="downloadJson()">🗂️ .json</button>
             </div>
         </div>
 
-        <!-- CREATIVE ARCHIVE -->
         <div class="card">
             <div class="section-header">Creative Archive</div>
             <h1>Prompt history</h1>
             <div id="historyList">
-                <p style="color: #64748b; text-align: center; margin: 10px 0;">သိမ်းဆည်းထားသော ဇာတ်လမ်းမှတ်တမ်း မရှိသေးပါ။</p>
+                <p style="color: var(--text-muted); text-align: center; margin: 10px 0;">သိမ်းဆည်းထားသော ဇာတ်လမ်းမှတ်တမ်း မရှိသေးပါ။</p>
             </div>
         </div>
 
-        <!-- SUBSCRIPTION PLANS -->
         <div class="card" style="background: transparent; border: none; padding: 0; box-shadow: none;">
             <div class="section-header" style="text-align: center;">Subscription Plans</div>
             <h1 style="text-align: center; font-size: 1.5rem;">သင့်အတွက် သင့်တော်တဲ့ Plan ကို ရွေးချယ်ပါ</h1>
-            <p style="text-align: center; color: #94a3b8; font-size: 0.85rem; margin-bottom: 20px;">Presentational pricing only. Connect a secure billing provider before accepting payments.</p>
+            <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">Presentational pricing only.</p>
             
             <div class="plan-card">
                 <div class="plan-title">Standard Premium</div>
@@ -279,12 +346,18 @@
 
     <script>
         let projectHistory = [];
+        let currentRawOutput = "";
 
         window.onload = function() {
             try {
                 const savedKey = localStorage.getItem('mm_story_gemini_key');
                 if(savedKey) document.getElementById('apiKeyInput').value = savedKey;
                 
+                const savedTheme = localStorage.getItem('mm_story_theme');
+                if(savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                }
+
                 const savedHistory = localStorage.getItem('mm_story_history');
                 if(savedHistory) {
                     projectHistory = JSON.parse(savedHistory);
@@ -292,6 +365,18 @@
                 }
             } catch(e) {}
         };
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const target = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', target);
+            try { localStorage.setItem('mm_story_theme', target); } catch(e) {}
+        }
+
+        function useTemplate(text) {
+            document.getElementById('storyIdea').value = text;
+            showToast("⚡ ဇာတ်လမ်း နမူနာ ထည့်ပြီးပါပြီ။");
+        }
 
         function saveApiKey() {
             const key = document.getElementById('apiKeyInput').value.trim();
@@ -316,6 +401,7 @@
         async function generateBlueprint() {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
+            const charDNA = document.getElementById('charDNA').value.trim();
             const style = document.getElementById('visualStyle').value;
             const tone = document.getElementById('emotionalTone').value;
             const ratio = document.getElementById('aspectRatio').value;
@@ -339,6 +425,7 @@
             try {
                 const promptText = `Create a professional movie production blueprint and scenes based on the following brief:
 Story Idea: ${idea}
+Character DNA Lock: ${charDNA || 'Maintain consistent character model'}
 Visual Style: ${style}
 Emotional Tone: ${tone}
 Aspect Ratio: ${ratio}
@@ -346,7 +433,7 @@ Scene Count: ${count}
 Voiceover Mode: ${voice}
 Output Language Mode: ${lang}
 
-Provide detailed scene-by-scene prompts with English Visual/Camera prompts and Myanmar Voiceover and Dialogues. Format cleanly.`;
+Strictly separate Background Voiceover Narration and Character Dialogues for each scene to prevent mixing. Provide detailed clean formatting.`;
 
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
@@ -357,11 +444,11 @@ Provide detailed scene-by-scene prompts with English Visual/Camera prompts and M
                 const data = await response.json();
                 if(data.error) throw new Error(data.error.message);
 
-                const output = data.candidates[0].content.parts[0].text;
-                document.getElementById('outputContent').innerText = output;
+                currentRawOutput = data.candidates[0].content.parts[0].text;
+                document.getElementById('outputContent').innerText = currentRawOutput;
                 document.getElementById('blueprintCard').style.display = 'block';
 
-                saveToHistory(idea.slice(0, 25) + '...', output, style);
+                saveToHistory(idea.slice(0, 25) + '...', currentRawOutput, style);
                 showToast("🎉 Production Blueprint ထွက်ရှိလာပါပြီ!");
                 window.scrollTo({ top: document.getElementById('blueprintCard').offsetTop, behavior: 'smooth' });
 
@@ -381,14 +468,14 @@ Provide detailed scene-by-scene prompts with English Visual/Camera prompts and M
         function renderHistory() {
             const listEl = document.getElementById('historyList');
             if(projectHistory.length === 0) {
-                listEl.innerHTML = `<p style="color: #64748b; text-align: center; margin: 10px 0;">သိမ်းဆည်းထားသော ဇာတ်လမ်းမှတ်တမ်း မရှိသေးပါ။</p>`;
+                listEl.innerHTML = `<p style="color: var(--text-muted); text-align: center; margin: 10px 0;">သိမ်းဆည်းထားသော ဇာတ်လမ်းမှတ်တမ်း မရှိသေးပါ။</p>`;
                 return;
             }
             let html = '';
             projectHistory.forEach((item, idx) => {
                 html += `<div class="history-item" onclick="loadHistory(${idx})">
-                    <div style="font-weight: bold; color: #f8fafc;">${item.title}</div>
-                    <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 3px;">${item.style} • ${item.timestamp}</div>
+                    <div style="font-weight: bold; color: var(--text-color);">${item.title}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 3px;">${item.style} • ${item.timestamp}</div>
                 </div>`;
             });
             listEl.innerHTML = html;
@@ -396,25 +483,46 @@ Provide detailed scene-by-scene prompts with English Visual/Camera prompts and M
 
         function loadHistory(idx) {
             const item = projectHistory[idx];
-            document.getElementById('outputContent').innerText = item.content;
+            currentRawOutput = item.content;
+            document.getElementById('outputContent').innerText = currentRawOutput;
             document.getElementById('blueprintCard').style.display = 'block';
             showToast("📂 မှတ်တမ်းကို ဖွင့်လိုက်ပါပြီ။");
             window.scrollTo({ top: document.getElementById('blueprintCard').offsetTop, behavior: 'smooth' });
         }
 
         function copyResult() {
-            navigator.clipboard.writeText(document.getElementById('outputContent').innerText).then(() => {
-                showToast("📋 ကူးယူပြီးပါပြီ");
+            navigator.clipboard.writeText(currentRawOutput).then(() => {
+                showToast("📋 Copy ကူးပြီးပါပြီ");
             });
         }
 
         function downloadTxt() {
-            const blob = new Blob([document.getElementById('outputContent').innerText], { type: 'text/plain;charset=utf-8' });
+            const blob = new Blob([currentRawOutput], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `Production_Blueprint.txt`;
             link.click();
-            showToast("📥 Download ဆွဲပြီးပါပြီ");
+            showToast("📥 .txt ဖိုင် Download ပြီးပါပြီ");
+        }
+
+        function downloadSrt() {
+            let srtContent = "1\n00:00:01,000 --> 00:00:05,000\n" + currentRawOutput.replace(/\n/g, "\n\n");
+            const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Subtitles.srt`;
+            link.click();
+            showToast("📑 .srt စာတန်းထိုးဖိုင် Download ပြီးပါပြီ");
+        }
+
+        function downloadJson() {
+            const jsonData = JSON.stringify({ blueprint: currentRawOutput, timestamp: new Date() }, null, 2);
+            const blob = new Blob([jsonData], { type: 'application/json;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Production_Blueprint.json`;
+            link.click();
+            showToast("🗂️ .json ဖိုင် Download ပြီးပါပြီ");
         }
     </script>
 </body>
