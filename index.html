@@ -215,7 +215,7 @@
     <div class="container">
         
         <div class="top-bar">
-            <span style="font-weight: bold; color: var(--primary);">MM Story Studio</span>
+            <span style="font-weight: bold; color: var(--primary);">MYANMAR STORY STUDIO</span>
             <button class="theme-toggle-btn" onclick="toggleTheme()">🌓 Theme ပြောင်းမည်</button>
         </div>
 
@@ -250,45 +250,55 @@
             <label>Visual Style</label>
             <select id="visualStyle">
                 <option value="Stylized 3D cinematic">Stylized 3D cinematic</option>
-                <option value="3D Pixar / Disney Animation">3D Pixar / Disney Animation</option>
-                <option value="2D Anime / Manga">2D Anime / Manga</option>
-                <option value="Dark Fantasy Cinematic">Dark Fantasy Cinematic</option>
+                <option value="Disney Pixar-inspired 3D">Disney Pixar-inspired 3D</option>
+                <option value="Hyper-realistic cinematic">Hyper-realistic cinematic</option>
+                <option value="Watercolor storybook">Watercolor storybook</option>
+                <option value="Anime-inspired 3D">Anime-inspired 3D</option>
+                <option value="Custom...">Custom...</option>
             </select>
 
             <label>Emotional Tone</label>
             <select id="emotionalTone">
                 <option value="Warm and inspiring">Warm and inspiring</option>
-                <option value="Mysterious and suspenseful">Mysterious and suspenseful</option>
-                <option value="Epic and adventurous">Epic and adventurous</option>
-                <option value="Emotional and dramatic">Emotional and dramatic</option>
+                <option value="Tense and suspenseful">Tense and suspenseful</option>
+                <option value="Joyful and playful">Joyful and playful</option>
+                <option value="Emotional and heartfelt">Emotional and heartfelt</option>
+                <option value="Epic and heroic">Epic and heroic</option>
+                <option value="Custom...">Custom...</option>
             </select>
 
             <label>Aspect Ratio</label>
             <select id="aspectRatio">
                 <option value="16:9 • YouTube">16:9 • YouTube</option>
-                <option value="9:16 • TikTok / Reels">9:16 • TikTok / Reels</option>
-                <option value="1:1 • Square Post">1:1 • Square Post</option>
+                <option value="9:16 • Shorts">9:16 • Shorts</option>
+                <option value="1:1 • Square">1:1 • Square</option>
+                <option value="4:5 • Portrait">4:5 • Portrait</option>
+                <option value="21:9 • Ultrawide">21:9 • Ultrawide</option>
+                <option value="Custom...">Custom...</option>
             </select>
 
             <label>Scene Count</label>
             <select id="sceneCount">
-                <option value="4">4 scenes</option>
-                <option value="6" selected>6 scenes</option>
-                <option value="10">10 scenes</option>
+                <option value="3 scenes">3 scenes</option>
+                <option value="4 scenes" selected>4 scenes</option>
+                <option value="6 scenes">6 scenes</option>
+                <option value="8 scenes">8 scenes</option>
+                <option value="12 scenes">12 scenes</option>
+                <option value="Custom...">Custom...</option>
             </select>
 
             <label>Voiceover Mode</label>
             <select id="voiceoverMode">
                 <option value="Mixed">Mixed (Voiceover + Dialogue)</option>
-                <option value="Narration Only">Narration Only</option>
-                <option value="Dialogue Heavy">Dialogue Heavy</option>
+                <option value="Narrator">Narrator</option>
+                <option value="Dialogue">Dialogue</option>
             </select>
 
             <label>Output Language</label>
             <select id="outputLang">
                 <option value="Burmese + English prompts">Burmese + English prompts</option>
-                <option value="English Only">English Only</option>
-                <option value="Burmese Only">Burmese Only</option>
+                <option value="Burmese">Burmese</option>
+                <option value="English">English</option>
             </select>
 
             <button class="generate-btn" onclick="generateBlueprint()">✨ Generate production blueprint →</button>
@@ -420,12 +430,14 @@
                 return;
             }
 
-            showToast("✨ Gemini AI ဖြင့် Blueprint ဖန်တီးနေပါပြီ...");
+            showToast("✨ Strict Continuity AI ဖြင့် Blueprint ဖန်တီးနေပါပြီ...");
 
             try {
-                const promptText = `Create a professional movie production blueprint and scenes based on the following brief:
+                // Strict Continuity Rules Integrated into System Prompt
+                const promptText = `Act as an expert AI video production director. Create a professional movie production blueprint based on the following brief, strictly enforcing 12 Continuity Locks across all scenes:
+
 Story Idea: ${idea}
-Character DNA Lock: ${charDNA || 'Maintain consistent character model'}
+Character DNA Lock: ${charDNA || 'Maintain absolute consistent character model'}
 Visual Style: ${style}
 Emotional Tone: ${tone}
 Aspect Ratio: ${ratio}
@@ -433,7 +445,17 @@ Scene Count: ${count}
 Voiceover Mode: ${voice}
 Output Language Mode: ${lang}
 
-Strictly separate Background Voiceover Narration and Character Dialogues for each scene to prevent mixing. Provide detailed clean formatting.`;
+STRICT CONTINUITY & ERROR PREVENTION RULES TO ENFORCE:
+1. CHARACTER VISUAL LOCK: Absolute consistency in face, hair, age, clothing, and art style (no mixing of cartoon and realistic).
+2. SCALE LOCK: Stable scale relationships between characters, objects, and environment across all scenes.
+3. OBJECT LOCK: No random objects appearing, disappearing, multiplying, or shifting position unless explicitly moved by character action.
+4. SPATIAL LOCK: Strict spatial positioning (left/right, front/back, depth) to prevent teleportation or random movement.
+5. CAMERA LOCK: Controlled Shot Type, Camera Angle, Height, Distance, Framing, Movement, and Subject Focus per scene.
+6. AUDIO SEPARATION LOCK: Clean separation between Narrator Voice and Character Voices (Speaker must be explicitly tagged as NARRATOR or CHARACTER A, etc.).
+7. LIP-SYNC LOCK: When Narrator speaks, characters' mouths are closed. Only the active speaking character performs lip-sync.
+8. SCRIPT & SCENE MEMORY CONTINUITY: Scene N+1 must strictly inherit the state, actions, locations, weather, time, lighting, and object positions from Scene N. No abrupt random changes.
+
+Provide detailed scene-by-scene prompts following this strict locked structure.`;
 
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
@@ -449,7 +471,7 @@ Strictly separate Background Voiceover Narration and Character Dialogues for eac
                 document.getElementById('blueprintCard').style.display = 'block';
 
                 saveToHistory(idea.slice(0, 25) + '...', currentRawOutput, style);
-                showToast("🎉 Production Blueprint ထွက်ရှိလာပါပြီ!");
+                showToast("🎉 Strict Continuity Blueprint ထွက်ရှိလာပါပြီ!");
                 window.scrollTo({ top: document.getElementById('blueprintCard').offsetTop, behavior: 'smooth' });
 
             } catch (err) {
