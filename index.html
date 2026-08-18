@@ -228,7 +228,7 @@
             </div>
         </header>
 
-        <!-- VIP Purchase & Contact Information -->
+        <!-- VIP Purchase & Contact Information (Updated Number) -->
         <div class="card contact-box">
             <h4>💎 VIP ဝယ်ယူရန် ဆက်သွယ်ရန်နှင့် ငွေပေးချေမှုများ</h4>
             <p><strong>Telegram:</strong> @storycutdrama | <strong>Viber / Phone:</strong> 09754615598</p>
@@ -323,7 +323,6 @@
     <script>
         let isVIP = false;
 
-        // Load saved state securely on startup
         window.onload = function() {
             try {
                 const savedKey = localStorage.getItem('mm_recap_gemini_key');
@@ -335,9 +334,7 @@
                     isVIP = true;
                     updateVIPUI();
                 }
-            } catch(e) {
-                console.error("LocalStorage error prevented safely.");
-            }
+            } catch(e) {}
         };
 
         function saveApiKey() {
@@ -528,4 +525,22 @@ MM RECAP SRD (SCRIPT & PRODUCTION DATA) MASTER FILE
             navigator.clipboard.writeText(text).then(() => {
                 showToast("📋 SRD Prompts များကို ကူးယူပြီးပါပြီ!");
             }).catch(err => {
-                alert("❌ ကူးယူရာတွင် အမှားအယွင်းရှိ
+                alert("❌ ကူးယူရာတွင် အမှားအယွင်းရှိပါသည်");
+            });
+        }
+
+        function downloadTxt() {
+            const outputContent = document.getElementById('outputContent');
+            if(!outputContent) return;
+            const text = outputContent.innerText;
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'MM_Recap_SRD_Master_File.txt';
+            link.click();
+            showToast("📥 SRD ဖိုင် Download ဆွဲပြီးပါပြီ!");
+        }
+    </script>
+
+</body>
+</html>
