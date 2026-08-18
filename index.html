@@ -12,6 +12,7 @@
             --primary: #8b5cf6;
             --primary-glow: rgba(139, 92, 246, 0.4);
             --accent: #10b981;
+            --danger: #ef4444;
             --text-color: #f8fafc;
             --border-color: rgba(255, 255, 255, 0.08);
         }
@@ -60,7 +61,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             margin-bottom: 20px; 
             border: 1px solid var(--border-color);
-            transition: transform 0.3s ease;
         }
         
         label { display: block; margin-bottom: 8px; font-weight: bold; color: #cbd5e1; font-size: 0.95rem; }
@@ -69,7 +69,7 @@
             width: 100%; padding: 14px 16px; border-radius: 12px; 
             border: 1px solid rgba(255, 255, 255, 0.1);
             background-color: rgba(9, 13, 22, 0.8); color: white; 
-            font-size: 1rem; margin-bottom: 20px; box-sizing: border-box;
+            font-size: 1rem; margin-bottom: 15px; box-sizing: border-box;
             font-family: 'Pyidaungsu', sans-serif;
             transition: all 0.3s ease;
         }
@@ -79,7 +79,11 @@
             box-shadow: 0 0 15px var(--primary-glow);
         }
 
-        button {
+        .api-btn-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .save-key-btn { background: linear-gradient(135deg, #059669, #10b981); color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; border: none; cursor: pointer; font-weight: bold; width: auto; font-family: 'Pyidaungsu', sans-serif; }
+        .remove-key-btn { background: linear-gradient(135deg, #dc2626, #ef4444); color: white; padding: 10px 16px; border-radius: 8px; font-size: 0.9rem; border: none; cursor: pointer; font-weight: bold; width: auto; font-family: 'Pyidaungsu', sans-serif; }
+
+        button.primary-btn {
             background: linear-gradient(135deg, #7c3aed, #4f46e5);
             color: white; border: none; padding: 16px 20px; border-radius: 12px;
             cursor: pointer; font-weight: bold; width: 100%; font-size: 1.05rem; 
@@ -87,7 +91,7 @@
             box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
             transition: all 0.3s ease;
         }
-        button:hover { 
+        button.primary-btn:hover { 
             transform: translateY(-2px);
             box-shadow: 0 12px 25px rgba(124, 58, 237, 0.6);
         }
@@ -118,9 +122,9 @@
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
         }
         .btn-group { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-        .action-btn { background: linear-gradient(135deg, #059669, #10b981); color: white; padding: 12px 18px; font-size: 14px; width: auto; box-shadow: 0 4px 15px rgba(16,185,129,0.3); }
-        .download-btn { background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; padding: 12px 18px; font-size: 14px; width: auto; box-shadow: 0 4px 15px rgba(56,189,248,0.3); }
-        .sample-btn { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; padding: 12px 18px; font-size: 14px; width: auto; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(245,158,11,0.3); }
+        .action-btn { background: linear-gradient(135deg, #059669, #10b981); color: white; padding: 12px 18px; font-size: 14px; width: auto; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .download-btn { background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; padding: 12px 18px; font-size: 14px; width: auto; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .sample-btn { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; padding: 12px 18px; font-size: 14px; width: auto; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
         
         .history-card { background: rgba(9, 13, 22, 0.6); border: 1px dashed rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; margin-top: 15px; }
         .history-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: background 0.2s; border-radius: 8px; }
@@ -152,6 +156,10 @@
         <div class="card">
             <h2>🔑 Gemini API Key:</h2>
             <input type="text" id="apiKeyInput" placeholder="AIza... (သို့မဟုတ်) AQ.... ဖြင့်စသော Key ထည့်ပါ">
+            <div class="api-btn-group">
+                <button class="save-key-btn" onclick="saveApiKey()">💾 API Key သိမ်းမည်</button>
+                <button class="remove-key-btn" onclick="removeApiKey()">🗑️ ဖယ်ရှားမည်</button>
+            </div>
         </div>
 
         <div class="card">
@@ -168,7 +176,7 @@
                 <option value="10" selected>Scene 10 ခု (အသေးစိတ် အပြည့်အစုံ)</option>
             </select>
 
-            <button onclick="startRealAIProduction()">✨ ပရီမီယမ် AI ဖြင့် အစစ်အမှန် ဖန်တီးမည်</button>
+            <button class="primary-btn" onclick="startRealAIProduction()">✨ ပရီမီယမ် AI ဖြင့် အစစ်အမှန် ဖန်တီးမည်</button>
         </div>
 
         <div class="progress-container" id="progressContainer">
@@ -231,9 +239,27 @@
             } catch(e) {}
         };
 
-        document.getElementById('apiKeyInput').addEventListener('input', function() {
-            try { localStorage.setItem('mm_recap_gemini_key', this.value.trim()); } catch(e) {}
-        });
+        function saveApiKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if(!key) {
+                alert('⚠️ ကျေးဇူးပြု၍ API Key ထည့်ပါ');
+                return;
+            }
+            try {
+                localStorage.setItem('mm_recap_gemini_key', key);
+                showToast("💾 API Key အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ။");
+            } catch(e) {
+                alert('⚠️ သိမ်းဆည်းရန် အဆင်မပြေပါ။');
+            }
+        }
+
+        function removeApiKey() {
+            try {
+                localStorage.removeItem('mm_recap_gemini_key');
+                document.getElementById('apiKeyInput').value = '';
+                showToast("🗑️ API Key ဖယ်ရှားပြီးပါပြီ။");
+            } catch(e) {}
+        }
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
@@ -255,7 +281,7 @@
             const sceneCount = parseInt(document.getElementById('sceneCount').value);
 
             if(!apiKey) {
-                alert('⚠️ ကျေးဇူးပြု၍ Gemini API Key ထည့်ပါ');
+                alert('⚠️ ကျေးဇူးပြု၍ API Key ထည့်ပြီး "API Key သိမ်းမည်" ကို နှိပ်ပါ။');
                 document.getElementById('apiKeyInput').focus();
                 return;
             }
@@ -390,7 +416,7 @@ Provide the full structured output cleanly.`;
         }
 
         function downloadTxt() {
-            const blob = new Blob([document.getElementById('outputContent'].innerText), { type: 'text/plain;charset=utf-8' });
+            const blob = new Blob([document.getElementById('outputContent').innerText], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `MM_Premium_AI_SRD.txt`;
