@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MM Recap - Ultimate SRD & AI Studio</title>
+    <style>
+        :root {
+            --bg-color: #090d16;
+            --card-bg: #131b2e;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --text-color: #f8fafc;
+            --border-color: #1e293b;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+        header h1 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .user-status {
+            font-size: 14px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .status-free { background-color: #334155; color: #94a3b8; }
+        .status-vip { background-color: #065f46; color: #34d399; }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #cbd5e1;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background-color: #090d16;
+            color: white;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+        .key-section, .license-section {
+            background-color: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        .key-section p, .license-section p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 0;
+        }
+        .contact-box {
+            background-color: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--accent);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .contact-box h4 {
+            color: var(--accent);
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        .tools-hub {
+            background-color: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .tools-hub a {
+            color: #38bdf8;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 16px;
+            transition: opacity 0.3s;
+        }
+        button:hover { opacity: 0.9; }
+        .btn-logout {
+            background: var(--danger);
+            width: auto;
+            padding: 6px 12px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .output-box {
+            background-color: #090d16;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent);
+            white-space: pre-wrap;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e2e8f0;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            background-color: var(--accent);
+            padding: 10px 15px;
+            font-size: 14px;
+            width: auto;
+        }
+        .download-btn {
+            background-color: #3b82f6;
+            padding: 10px 15px;
+            font-size: 14px;
+            width: auto;
+        }
+        .sample-btn {
+            background-color: #f59e0b;
+            padding: 10px 15px;
+            font-size: 14px;
+            width: auto;
+            margin-bottom: 15px;
+        }
+        .reset-btn {
+            background-color: #64748b;
+            padding: 10px 15px;
+            font-size: 14px;
+            width: auto;
+            margin-bottom: 15px;
+            margin-left: 10px;
+        }
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #10b981;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 1000;
+            right: 30px;
+            bottom: 30px;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+        #loadingOverlay {
+            display: none;
+            background: rgba(9, 13, 22, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header & Level Status -->
+        <header>
+            <div>
+                <h1>MM Recap Studio</h1>
+                <span style="font-size: 12px; color: #94a3b8;">Locked Level-Based SRD Studio</span>
+            </div>
+            <div>
+                <span id="userBadge" class="user-status status-free">Free Tier (VPN Required)</span>
+                <button id="authBtn" class="btn-logout" onclick="toggleAuth()">VIP သို့ ပြောင်းရန်</button>
+            </div>
+        </header>
+
+        <!-- VIP Purchase & Contact Information -->
+        <div class="card contact-box">
+            <h4>💎 VIP ဝယ်ယူရန် ဆက်သွယ်ရန်နှင့် ငွေပေးချေမှုများ</h4>
+            <p><strong>Telegram:</strong> @storycutdrama | <strong>Viber / Phone:</strong> 09777400748</p>
+            <p><strong>KBAY / Wave Money / Banks:</strong> 09777400748 (MM Recap Account)</p>
+            <p style="margin-bottom: 0; color: #94a3b8; font-size: 12px;">* VIP ဝယ်ယူထားသူများအတွက် VPN လုံးဝမလိုပါ၊ စောင့်ဆိုင်းချိန် ၃ မိနစ်အောက်ဖြင့် အမြန်ဆုံး SRD ဖိုင်များ ထုတ်လုပ်နိုင်မည်။</p>
+        </div>
+
+        <!-- Direct Tools Hub -->
+        <div class="tools-hub">
+            <strong>🔗 အသုံးဝင်သော အခမဲ့ AI Tools များ:</strong><br>
+            <a href="https://www.capcut.com/" target="_blank">1. CapCut Web (Video & Auto-Captions)</a>
+            <a href="https://elevenlabs.io/" target="_blank">2. ElevenLabs (AI Voiceover)</a>
+        </div>
+
+        <!-- VIP License Activation Code Section -->
+        <div class="card license-section">
+            <label for="licenseInput">🎟️ VIP License Activation Code (လစဉ်ကြေးပေးထားသူများအတွက်):</label>
+            <p>Admin ထံမှ ရရှိသော Activation Code ထည့်သွင်းပြီး အတည်ပြုပါ။</p>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="licenseInput" placeholder="MMRECAP-VIP-XXXX" style="margin-bottom:0;">
+                <button onclick="activateLicense()" style="width: 140px; padding: 0; background: var(--accent);">အတည်ပြုမည်</button>
+            </div>
+        </div>
+
+        <!-- API Key Management with LocalStorage -->
+        <div class="card key-section">
+            <label for="apiKeyInput">🔑 ကိုယ်ပိုင် Gemini API Key (Error လုံးဝမတက်စေရန်):</label>
+            <p id="keyDesc">Free အဆင့်တွင် VPN ဖွင့်ရန်လိုပြီး၊ VIP အဆင့်တွင် VPN မလိုဘဲ ကိုယ်ပိုင် API Key ဖြင့် တိုက်ရိုက်အလုပ်လုပ်ပါမည်။ (ထည့်ပြီးပါက ဖုန်းထဲတွင် အလိုအလျောက် မှတ်သားထားမည်)</p>
+            <input type="text" id="apiKeyInput" placeholder="AIzaSy... (သင့်ကိုယ်ပိုင် Gemini API Key ထည့်ရန်)" oninput="saveApiKey()">
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: #818cf8; font-size: 13px; text-decoration: none;">👉 Gemini API Key အခမဲ့ သွားယူရန် ဤနေရာကို နှိပ်ပါ</a>
+        </div>
+
+        <!-- Main Studio Input Card -->
+        <div class="card">
+            <div>
+                <button class="sample-btn" onclick="loadSample()">⚡ Sample Demo ဖြည့်ရန်</button>
+                <button class="reset-btn" onclick="resetForm()">🔄 အသစ်ရေးမည်</button>
+            </div>
+
+            <label for="storyTitle">ဇာတ်လမ်း အမည် (သို့) အဓိက အကြောင်းအရာ:</label>
+            <input type="text" id="storyTitle" placeholder="ဥပမာ - ရွာငယ်လေးထဲက လျှို့ဝှက်ဆန်းကြယ် တောအုပ်">
+
+            <label for="charName">ဇာတ်ကောင်အမည်နှင့် ပုံစံ (Character DNA Lock):</label>
+            <input type="text" id="charName" placeholder="ဥပမာ - U Ba, elderly man with white beard">
+
+            <label for="voiceStyle">အသံသွင်းဟန်နှင့် ဘာသာစကား စတိုင် (Voice Style & Tone):</label>
+            <select id="voiceStyle">
+                <option value="Standard Storytelling">စံနှုန်းမှန် ဇာတ်ကြောင်းပြော (Standard Burmese Narration)</option>
+                <option value="Suspense & Mystery">လျှို့ဝှက်ဆန်းကြယ် တည်ငြိမ်သောဟန် (Suspense & Thriller)</option>
+                <option value="Emotional & Dramatic">စိတ်ခံစားမှုအပြည့် ဒရာမာဟန် (Emotional & Dramatic)</option>
+                <option value="Action & Exciting">စိတ်လှုပ်ရှားဖွယ် အက်ရှင်ဟန် (Fast & Exciting)</option>
+            </select>
+
+            <label for="sceneCount">လိုချင်သော ဇာတ်ကွက် အပိုင်းအရေအတွက် (Scene Count):</label>
+            <select id="sceneCount">
+                <option value="3">Scene 3 ခု (ဇာတ်လမ်းတို)</option>
+                <option value="5">Scene 5 ခု (အသင့်အတင့်)</option>
+                <option value="10">Scene 10 ခု (ဇာတ်လမ်းရှည် - VIP သီးသန့်)</option>
+                <option value="15">Scene 15 ခု (ဇာတ်လမ်းအရှည်ကြီး - VIP သီးသန့်)</option>
+            </select>
+
+            <label for="visualStyle">ဗွီဒီယို ပုံစံစတိုင် (Visual Style):</label>
+            <select id="visualStyle">
+                <option value="3D Pixar">၃ဒီ ပစ်ဆာ (3D Pixar / Disney Animation)</option>
+                <option value="3D Cute Object">၃ဒီ ချစ်စရာ ဇာတ်ကောင် (3D Cute Object/Fruit)</option>
+                <option value="2D Anime">၂ဒီ အန်နီမေးရှင်း (2D Anime / Manga)</option>
+                <option value="Cinematic Realistic">ရုပ်ရှင်ဆန်ဆန် (Cinematic Live Action)</option>
+            </select>
+
+            <button onclick="startAutoRecap()">⚡ SRD ဖိုင်များ အလိုအလျောက် ထုတ်မည်</button>
+        </div>
+
+        <!-- Loading Timer Simulation -->
+        <div id="loadingOverlay">
+            <p id="loadingText">⏳ SRD ဖိုင်များကို စီစဉ်ထုတ်လုပ်နေပါပြီ...</p>
+        </div>
+
+        <!-- Output Result Card -->
+        <div class="card" id="resultCard" style="display:none;">
+            <h3>✨ ထွက်လာသော SRD (Script & Recipe Data) ဖိုင်</h3>
+            <div class="output-box" id="outputContent"></div>
+            <div class="btn-group">
+                <button class="action-btn" onclick="copyResult()">📋 Copy ကူးမည်</button>
+                <button class="download-btn" onclick="downloadTxt()">📥 SRD .txt ဖိုင် Download မည်</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Element -->
+    <div id="toast">အောင်မြင်စွာ လုပ်ဆောင်ပြီးပါပြီ! ✅</div>
+
+    <script>
+        let isVIP = false;
+
+        // Load saved state securely on startup
+        window.onload = function() {
+            try {
+                const savedKey = localStorage.getItem('mm_recap_gemini_key');
+                if(savedKey) {
+                    document.getElementById('apiKeyInput').value = savedKey;
+                }
+                const savedVIP = localStorage.getItem('mm_recap_vip_status');
+                if(savedVIP === 'true') {
+                    isVIP = true;
+                    updateVIPUI();
+                }
+            } catch(e) {
+                console.error("LocalStorage error prevented safely.");
+            }
+        };
+
+        function saveApiKey() {
+            try {
+                const key = document.getElementById('apiKeyInput').value.trim();
+                localStorage.setItem('mm_recap_gemini_key', key);
+            } catch(e) {}
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        function activateLicense() {
+            const code = document.getElementById('licenseInput').value.trim();
+            if(!code) {
+                alert("⚠️ ကျေးဇူးပြု၍ License Code ထည့်ပါ။");
+                return;
+            }
+            if(code === "MMRECAP-VIP-2026" || code.startsWith("VIP-")) {
+                isVIP = true;
+                try {
+                    localStorage.setItem('mm_recap_vip_status', 'true');
+                } catch(e) {}
+                updateVIPUI();
+                showToast("🎉 VIP License အောင်မြင်စွာ ဖွင့်ပြီးပါပြီ!");
+            } else {
+                alert("❌ ထည့်သွင်းထားသော License Code မမှန်ကန်ပါ။ ကျေးဇူးပြု၍ Admin ထံ ဆက်သွယ်ပါ။");
+            }
+        }
+
+        function toggleAuth() {
+            isVIP = !isVIP;
+            try {
+                localStorage.setItem('mm_recap_vip_status', isVIP ? 'true' : 'false');
+            } catch(e) {}
+            updateVIPUI();
+            if(isVIP) {
+                showToast("🚀 VIP အဆင့်သို့ ပြောင်းပြီးပါပြီ!");
+            } else {
+                showToast("ℹ️ Free အဆင့်သို့ ပြန်ရောက်ပါပြီ။");
+            }
+        }
+
+        function updateVIPUI() {
+            const badge = document.getElementById('userBadge');
+            const authBtn = document.getElementById('authBtn');
+            const keyDesc = document.getElementById('keyDesc');
+            
+            if(isVIP) {
+                badge.innerText = "VIP Member (No VPN / Fast 3m)";
+                badge.className = "user-status status-vip";
+                authBtn.innerText = "Free သို့ ပြောင်းရန်";
+                keyDesc.innerText = "VIP အဆင့်: VPN လုံးဝမလိုဘဲ ၃ မိနစ်အောက် အမြန်ဆုံး SRD ဖိုင်များ ထုတ်လုပ်ပါမည်။";
+            } else {
+                badge.innerText = "Free Tier (VPN Required / 5-8m)";
+                badge.className = "user-status status-free";
+                authBtn.innerText = "VIP သို့ ပြောင်းရန်";
+                keyDesc.innerText = "Free အဆင့်: မြန်မာနိုင်ငံမှ ဝင်ရောက်ပါက VPN ဖွင့်ရန်လိုပြီး စောင့်ဆိုင်းချိန် ၅ မှ ၈ မိနစ် ရှိပါမည်။";
+            }
+        }
+
+        function loadSample() {
+            document.getElementById('storyTitle').value = "ရွာစွန်က လျှို့ဝှက်ဆန်းကြယ် တောအုပ်ကြီး";
+            document.getElementById('charName').value = "U Ba, old wise man with walking stick";
+            showToast("⚡ Sample Demo များကို ဖြည့်ပြီးပါပြီ!");
+        }
+
+        function resetForm() {
+            document.getElementById('storyTitle').value = "";
+            document.getElementById('charName').value = "";
+            document.getElementById('resultCard').style.display = 'none';
+            showToast("🔄 ဖောင်ကို အသစ်ပြန်ရှင်းပြီးပါပြီ။");
+        }
+
+        function startAutoRecap() {
+            const titleInput = document.getElementById('storyTitle');
+            const apiKeyInput = document.getElementById('apiKeyInput');
+            const sceneCountSelect = document.getElementById('sceneCount');
+
+            if(!titleInput || !apiKeyInput || !sceneCountSelect) return;
+
+            const title = titleInput.value.trim();
+            const apiKey = apiKeyInput.value.trim();
+            const sceneCount = parseInt(sceneCountSelect.value);
+
+            if(!title) {
+                alert('⚠️ ကျေးဇူးပြု၍ ဇာတ်လမ်း အကြောင်းအရာ ထည့်ပါ။');
+                titleInput.focus();
+                return;
+            }
+
+            if(apiKey && !apiKey.startsWith('AIza')) {
+                alert('❌ ထည့်သွင်းထားသော Gemini API Key ပုံစံ မမှန်ကန်ပါ။ "AIza" ဖြင့် စတင်ရပါမည်။ ကျေးဇူးပြု၍ ပြန်စစ်ပါ။');
+                apiKeyInput.focus();
+                return;
+            }
+
+            if(!isVIP && sceneCount > 5) {
+                alert('⚠️ Free အဆင့်တွင် Scene 5 ခုအထိသာ ထုတ်ယူခွင့်ရှိပါသည်။ ဇာတ်လမ်းရှည် SRD ဖိုင်များအတွက် VIP သို့ ပြောင်းပါ။');
+                return;
+            }
+
+            let waitTime = isVIP ? 1500 : 4000; 
+            let tierMessage = isVIP ? "⚡ VIP Speed: ၃ မိနစ်အောက်ဖြင့် SRD ဖိုင်များကို တည်ဆောက်နေပါပြီ..." : "⏳ Free Tier: VPN ချိတ်ဆက်မှုကို စစ်ဆေးနေပါသည် (၅ မှ ၈ မိနစ်အတွင်း ပြီးစီးမည်)...";
+
+            const loading = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const resultCard = document.getElementById('resultCard');
+            
+            if(resultCard) resultCard.style.display = 'none';
+            if(loading && loadingText) {
+                loading.style.display = 'block';
+                loadingText.innerText = tierMessage;
+            }
+
+            setTimeout(() => {
+                if(loading) loading.style.display = 'none';
+                generateContent();
+            }, waitTime);
+        }
+
+        function generateContent() {
+            const title = document.getElementById('storyTitle').value.trim();
+            const charName = document.getElementById('charName').value.trim() || 'Main Character';
+            const style = document.getElementById('visualStyle').value;
+            const voiceStyle = document.getElementById('voiceStyle').value;
+            const sceneCount = parseInt(document.getElementById('sceneCount').value);
+
+            let tierName = isVIP ? "VIP Member (No VPN / Fast SRD)" : "Free Tier (VPN Active / Standard SRD)";
+
+            let resultText = `==================================================
+MM RECAP SRD (SCRIPT & PRODUCTION DATA) MASTER FILE
+==================================================
+- ဇာတ်လမ်းခေါင်းစဉ်: ${title}
+- ဇာတ်ကောင် DNA Lock: ${charName}
+- ဗွီဒီယို ပုံစံစတိုင်: ${style}
+- အသံသွင်းဟန် (Voice Style): ${voiceStyle}
+- စုစုပေါင်း အပိုင်းအရေအတွက်: Scene ${sceneCount} ခု
+- အဆင့်အတန်း: ${tierName.toUpperCase()}
+- ပစ်မှတ်ပလက်ဖောင်း: TikTok (9:16 ဒေါင်လိုက် အသင့်တင်ရန်)
+
+--- 🔥 TIKTOK VIRAL HOOK & TITLE SUITE ---
+1. Trending Titles: "${title} ရဲ့ အစအဆုံး မထင်မှတ်ထားသော အဖြစ်အပျက်"
+2. 3-Second Viral Hook: "ဒီဗွီဒီယိုကို မကြည့်ရသေးရင် အများကြီး နောင်တရလိမ့်မယ်..."
+
+--- 🎬 DETAILED SRD SCENE BLUEPRINTS ---
+`;
+
+            for(let i = 1; i <= sceneCount; i++) {
+                resultText += `
+--------------------------------------------------
+[SCENE ${i} OF ${sceneCount} - SRD DATA BLOCK]
+--------------------------------------------------
+• ဇာတ်ကွက်ရှင်းလင်းချက် (Storyboard Action): ${charName} ပါဝင်သည့် ${title} ၏ အပိုင်း (${i}) အသေးစိတ် ရှင်းလင်းချက်နှင့် ပရိသတ်ကို ဆွဲဆောင်မည့် အချက်များ။
+• Midjourney / Flux Prompt (English): ${charName}, scene ${i} of ${title}, ${style} style, character consistency lock, 8k resolution, cinematic lighting --ar 9:16
+• AI Video Motion Prompt (<= 900 Chars): Smooth cinematic camera motion, high emotional depth, 24fps.
+• Voiceover Narration (${voiceStyle}): "ဒီဇာတ်ကွက်မှာတော့..."
+`;
+            }
+
+            resultText += `
+==================================================
+--- 🎙️ AUDIO & BURMESE SUBTITLE ACCURACY GUIDE ---
+- Voiceover Tool: CapCut AI Voice သို့မဟုတ် ElevenLabs တွင် အသုံးပြုပါ။
+- မြန်မာစာတန်းထိုး (Myanmar Subtitle): အမှန်ဆုံးနှင့် သေသပ်စေရန် CapCut ၏ Auto-Captions ဖြင့် ထည့်သွင်းပြီး စာလုံးပေါင်းများကို ပြန်လည်စစ်ဆေးပါ။
+- TikTok Direct Upload: ထွက်လာသော SRD ဖိုင်ပါ Prompts များကို CapCut တွင် ဗွီဒီယိုထုတ်ပြီး TikTok သို့ တိုက်ရိုက် တင်နိုင်ပါပြီ။
+==================================================`;
+
+            const outputContent = document.getElementById('outputContent');
+            const resultCard = document.getElementById('resultCard');
+
+            if(outputContent && resultCard) {
+                outputContent.innerText = resultText;
+                resultCard.style.display = 'block';
+                resultCard.scrollIntoView({ behavior: 'smooth' });
+                showToast("✨ SRD ဖိုင်များ အောင်မြင်စွာ ထွက်ရှိလာပါပြီ!");
+            }
+        }
+
+        function copyResult() {
+            const outputContent = document.getElementById('outputContent');
+            if(!outputContent) return;
+            const text = outputContent.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("📋 SRD Prompts များကို ကူးယူပြီးပါပြီ!");
+            }).catch(err => {
+                alert("❌ ကူးယူရာတွင် အမှားအယွင်းရှိ
