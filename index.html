@@ -554,7 +554,7 @@
             });
         }
 
-        // STEP-BY-STEP GENERATION FUNCTION WITH CORRECT v1 API ENDPOINT
+        // STEP-BY-STEP GENERATION FUNCTION WITH UPDATED gemini-2.0-flash MODEL
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -614,8 +614,8 @@ Story Idea: ${idea}`;
             document.getElementById('statusSubText').innerText = stepTitle;
 
             try {
-                // CORRECTED TO v1 ENDPOINT TO FIX THE NOT FOUND ERROR
-                let targetUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                // UPDATED TO gemini-2.0-flash MODEL TO FIX 404 NOT FOUND ERROR
+                let targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 let fetchUrl = isVIP ? targetUrl : "https://api.allorigins.win/raw?url=" + encodeURIComponent(targetUrl);
 
                 const response = await fetch(fetchUrl, {
