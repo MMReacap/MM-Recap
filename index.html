@@ -307,17 +307,17 @@
             </div>
 
             <div class="output-panel active" id="outputPanel1">
-                <label>Step 1: Strict Burmese Sequential Script (Complete & Filled)</label>
+                <label>Step 1: Strict Burmese Sequential Script</label>
                 <div id="scriptScenesContainer"></div>
             </div>
 
             <div class="output-panel" id="outputPanel2">
-                <label>Step 2: Prop-Bound Image Generation Prompts</label>
+                <label>Step 2: Clean Image Generation Prompts (No Markdown Artifacts)</label>
                 <div id="photoScenesContainer"></div>
             </div>
 
             <div class="output-panel" id="outputPanel3">
-                <label>Step 3: State-Locked Video Prompts</label>
+                <label>Step 3: Clean Video Generation Prompts (No Markdown Artifacts)</label>
                 <div id="videoScenesContainer"></div>
             </div>
 
@@ -508,13 +508,15 @@
             let html = '';
             parts.forEach((part, idx) => {
                 if(!part.trim()) return;
-                const safeText = part.replace(/"/g, '&quot;');
+                // Markdown အမှိုက်များ (**, *, `, #) ကို ဖယ်ရှားပေးခြင်း
+                let cleanPart = part.replace(/[*`#_]/g, '').trim();
+                const safeText = cleanPart.replace(/"/g, '&quot;');
                 html += `<div class="scene-item-box">
                     <div class="scene-item-header">
                         <span>အပိုင်း / Scene ${idx + 1}</span>
                         <button class="copy-scene-btn" onclick="copySpecificScene(\`${safeText}\`)">📋 Copy Scene</button>
                     </div>
-                    <div style="white-space: pre-wrap; font-size: 0.9rem; color: var(--text-color);">${part.trim()}</div>
+                    <div style="white-space: pre-wrap; font-size: 0.9rem; color: var(--text-color);">${cleanPart}</div>
                 </div>`;
             });
             container.innerHTML = html;
@@ -527,7 +529,7 @@
             });
         }
 
-        // 🛠️ ROBUST PROMPT ENFORCING COMPLETE SCENE DETAILS WITHOUT EMPTY OUTPUTS
+        // 🛠️ STRICT PROMPT ENFORCING PURE PLAIN TEXT WITHOUT MARKDOWN ARTIFACTS
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -548,38 +550,34 @@
             let stepTitle = "";
 
             let sceneCountInstruction = storyMode === 'short' 
-                ? "Generate exactly 10 complete, fully detailed scenes (Scene 1 to Scene 10). Do not leave any scene empty or marked with dashes." 
-                : "Generate a complete multi-scene sequence with fully detailed content in every single scene without omitting text.";
+                ? "Generate exactly 10 complete scenes (Scene 1 to Scene 10) without any missing parts." 
+                : "Generate a complete multi-scene sequence without omitting any content.";
 
             if (stepNo === 1) {
-                stepTitle = "Generating Complete Burmese Script (<900 words)...";
-                promptText = `You are a strict Professional Burmese Scriptwriter. Output ONLY pure Burmese script content under 900 words total. Every single scene MUST be fully written out with complete narration and dialogue. NO EMPTY SCENES OR DASHES ALLOWED.
-STRICT GUARDRAILS:
+                stepTitle = "Generating Complete Burmese Script...";
+                promptText = `You are a strict Professional Burmese Scriptwriter. Output ONLY plain text Burmese script. DO NOT use markdown symbols like asterisks (*), backticks (\`5), or hashes (#). 
+STRICT RULES:
 1. ${sceneCountInstruction}
-2. LENGTH LIMIT: Entire output MUST be strictly under 900 words total.
-3. SCRIPT FORMAT: Use explicit Scene headers (e.g., "Scene 1: ...").
-4. AUDIO TIMING & LOCK: Every line must have an explicit speaker name lock. Format: "[Narrator]: ..." and "[Character Name]: ...".
-5. PROP LOCK: Keep object/prop consistency identical throughout all scenes.
+2. Use explicit Scene headers (e.g., "Scene 1: ...").
+3. Speaker lock format: "[Narrator]: ..." and "[Character Name]: ...".
 
 Story Idea: ${idea}`;
             } else if (stepNo === 2) {
-                stepTitle = "Generating Complete Image Prompts (<900 words)...";
-                promptText = `You are an expert Prompt Engineer. Create ONLY Image Generation Prompts (Midjourney/DALL-E) scene-by-scene in English. Ensure every scene has a complete, rich prompt without empty placeholders.
+                stepTitle = "Generating Clean Image Prompts...";
+                promptText = `You are an expert Prompt Engineer. Create ONLY plain text Image Generation Prompts (Midjourney/DALL-E) scene-by-scene in English. DO NOT use markdown symbols like asterisks (*), backticks (\`), or hashes (#).
 STRICT RULES:
 1. ${sceneCountInstruction}
-2. LENGTH LIMIT: Total output MUST be under 900 words.
-3. PROP BINDING: Strictly enforce the specific prop across all scenes.
-4. Visual Style/Preset: ${style}, Aspect Ratio: ${ratio}.
+2. PROP BINDING: Enforce the specific prop consistently.
+3. Visual Style/Preset: ${style}, Aspect Ratio: ${ratio}.
 
 Story Idea: ${idea}`;
             } else {
-                stepTitle = "Generating Complete Video Prompts (<900 words)...";
-                promptText = `You are an expert Video Director. Create ONLY Video Generation Prompts (Sora/Runway/Luma) scene-by-scene in English, optimized for 5-10 second clips. Make sure every scene is fully fleshed out.
+                stepTitle = "Generating Clean Video Prompts...";
+                promptText = `You are an expert Video Director. Create ONLY plain text Video Generation Prompts (Sora/Runway/Luma) scene-by-scene in English, optimized for 5-10 second clips. DO NOT use markdown symbols like asterisks (*), backticks (\`), or hashes (#).
 STRICT RULES:
 1. ${sceneCountInstruction}
-2. LENGTH LIMIT: Total output MUST be under 900 words.
-3. Focus on camera movement, framing, and maintaining exact object state.
-4. Visual Style: ${style}.
+2. Focus on camera movement and object state.
+3. Visual Style: ${style}.
 
 Story Idea: ${idea}`;
             }
@@ -599,7 +597,9 @@ Story Idea: ${idea}`;
                 if(data.error) throw new Error(data.error.message);
                 if(!data.candidates || !data.candidates[0].content) throw new Error("Invalid API response format received.");
 
-                const resultText = data.candidates[0].content.parts[0].text;
+                let resultText = data.candidates[0].content.parts[0].text;
+                // JavaScript ဘက်မှလည်း Markdown အမှိုက်များကို အပြီးတိုင် ညှစ်ထုတ်ပေးသည်
+                resultText = resultText.replace(/[*`#_]/g, '');
 
                 if (stepNo === 1) {
                     scriptOutput = resultText;
@@ -669,7 +669,7 @@ Story Idea: ${idea}`;
             }
         }
 
-        function copyCurrentTab() {
+        function copyCurrentTab`() {
             let textToCopy = "";
             if(currentTab === 1) textToCopy = scriptOutput;
             else if(currentTab === 2) textToCopy = photoOutput;
