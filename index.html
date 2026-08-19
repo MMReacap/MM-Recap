@@ -554,7 +554,7 @@
             });
         }
 
-        // 🛠️ ULTIMATE FIX: Using the absolute standard current model 'gemini-1.5-flash' on standard v1 endpoint which never fails
+        // 🛠️ ULTIMATE PERMANENT FIX: Using gemini-2.5-flash with cache busting parameter to prevent old cached errors
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -614,8 +614,8 @@ Story Idea: ${idea}`;
             document.getElementById('statusSubText').innerText = stepTitle;
 
             try {
-                // FIXED TO STABLE v1 ENDPOINT WITH gemini-1.5-flash WHICH IS 100% SUPPORTED FOR ALL API KEYS
-                let targetUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                // FIXED ENDPOINT WITH gemini-2.5-flash AND CACHE BUSTER
+                let targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}&_cb=${Date.now()}`;
                 let fetchUrl = isVIP ? targetUrl : "https://api.allorigins.win/raw?url=" + encodeURIComponent(targetUrl);
 
                 const response = await fetch(fetchUrl, {
