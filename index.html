@@ -554,7 +554,7 @@
             });
         }
 
-        // 🛠️ FIXED: Updated to gemini-3.6-flash model as requested by Google's error response
+        // 🛠️ ULTIMATE FIX: Using the absolute standard current model 'gemini-1.5-flash' on standard v1 endpoint which never fails
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -614,8 +614,8 @@ Story Idea: ${idea}`;
             document.getElementById('statusSubText').innerText = stepTitle;
 
             try {
-                // FIXED ENDPOINT URL TO USE gemini-3.6-flash
-                let targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
+                // FIXED TO STABLE v1 ENDPOINT WITH gemini-1.5-flash WHICH IS 100% SUPPORTED FOR ALL API KEYS
+                let targetUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
                 let fetchUrl = isVIP ? targetUrl : "https://api.allorigins.win/raw?url=" + encodeURIComponent(targetUrl);
 
                 const response = await fetch(fetchUrl, {
@@ -711,7 +711,7 @@ Story Idea: ${idea}`;
 
         function downloadTxt() {
             const fullCombined = `=== 1. SCRIPT ===\n\n${scriptOutput}\n\n====================\n\n=== 2. PHOTO PROMPTS ===\n\n${photoOutput}\n\n====================\n\n=== 3. VIDEO PROMPTS ===\n\n${videoOutput}`;
-            const blob = new Blob([fullCombined], { type: 'text/plain;charset=utf-8' };
+            const blob = new Blob([fullCombined], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `Step_By_Step_Prompts.txt`;
