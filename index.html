@@ -554,7 +554,7 @@
             });
         }
 
-        // 🛠️ CLEANED & FIXED: 100% Valid JSON Payload without any unknown query parameters
+        // 🛠️ ULTIMATE FIXED MODEL URL (Using gemini-2.0-flash without path prefix issues)
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -614,7 +614,8 @@ Story Idea: ${idea}`;
             document.getElementById('statusSubText').innerText = stepTitle;
 
             try {
-                let fetchUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                // အမှားကင်းစေရန် model နာမည်ကို v1 API version နှင့် gemini-2.0-flash သို့ တိုက်ရိုက်ချိတ်ဆက်ထားပါသည်
+                let fetchUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(fetchUrl, {
                     method: 'POST',
