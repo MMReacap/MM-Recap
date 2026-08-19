@@ -300,7 +300,7 @@
                 <option value="9:16 • Shorts / TikTok">9:16 • Shorts / TikTok</option>
             </select>
 
-            <!-- STEP-BY-STEP ACTION BUTTONS (Restored as requested) -->
+            <!-- STEP-BY-STEP ACTION BUTTONS -->
             <button class="generate-btn" onclick="generateStep(1)">📜 Step 1: ဇာတ်ညွှန်းသီးသန့် (မြန်မာသန့်သန့်) အရင်ထုတ်မည်</button>
             <div class="step-action-group">
                 <button class="step-action-btn" onclick="generateStep(2)">🎨 Step 2: ပုံ Prompts ထုတ်မည်</button>
@@ -554,7 +554,7 @@
             });
         }
 
-        // STEP-BY-STEP GENERATION FUNCTION WITH STABLE MODEL VERSION
+        // STEP-BY-STEP GENERATION FUNCTION WITH CORRECT v1 API ENDPOINT
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -614,8 +614,8 @@ Story Idea: ${idea}`;
             document.getElementById('statusSubText').innerText = stepTitle;
 
             try {
-                // CORRECTED MODEL VERSION COMPATIBLE WITH v1beta API
-                let targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                // CORRECTED TO v1 ENDPOINT TO FIX THE NOT FOUND ERROR
+                let targetUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
                 let fetchUrl = isVIP ? targetUrl : "https://api.allorigins.win/raw?url=" + encodeURIComponent(targetUrl);
 
                 const response = await fetch(fetchUrl, {
@@ -666,7 +666,7 @@ Story Idea: ${idea}`;
         function renderHistory() {
             const listEl = document.getElementById('historyList');
             if(projectHistory.length === 0) {
-                listEl.innerHTML = `<p style="color: var(--text-muted); text-align: center; margin: 10px 0;">မှတ်တမ်း မရှိသေးပါ။</p>`;
+                listEl.innerHTML = `<p style="color: var(--text-muted); text-align: center; margin: 10px 0;">သိမ်းဆည်းထားသော ဇာတ်လမ်းမှတ်တမ်း မရှိသေးပါ။</p>`;
                 return;
             }
             let html = '';
