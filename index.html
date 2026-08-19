@@ -632,7 +632,6 @@
             const code = document.getElementById('vipCodeInput').value.trim();
             if(!code) { alert('⚠️ ကျေးဇူးပြု၍ SCD-VIP Code ထည့်ပါ။'); return; }
             
-            // လက်ခံမည့် VIP ကုဒ်များ (SCD-VIP-8899 သို့မဟုတ် SCD-VIP-9988)
             if(code === 'SCD-VIP-8899' || code === 'SCD-VIP-9988' || (code.startsWith('SCD-VIP-') && code.length > 8)) {
                 isVIP = true;
                 localStorage.setItem('mm_story_vip_active', 'true');
@@ -733,7 +732,8 @@ STRICT CONTINUITY & ERROR PREVENTION RULES TO ENFORCE:
 
 FORMAT REQUIREMENT: Include both the scene script/blueprint AND a dedicated section for "IMAGE GENERATION PROMPTS (Midjourney/Bing/DALL-E)" containing scene-by-scene image prompts incorporating the Character DNA Lock (${charDNA}).`;
 
-                let targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                // ပြင်ဆင်လိုက်သော နေရာ: gemini-2.5-flash ကို တိုက်ရိုက်သုံးထားပါသည် (Error လုံးဝမတက်စေရန်)
+                let targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
                 let fetchUrl = targetUrl;
                 
                 if (!isVIP) {
@@ -834,7 +834,7 @@ FORMAT REQUIREMENT: Include both the scene script/blueprint AND a dedicated sect
             const jsonData = JSON.stringify({ blueprint: currentRawOutput, timestamp: new Date() }, null, 2);
             const blob = new Blob([jsonData], { type: 'application/json;charset=utf-8' });
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
+            link.href = URL.currentObjectURL ? URL.createObjectURL(blob) : window.URL.createObjectURL(blob);
             link.download = `Production_Blueprint.json`;
             link.click();
             showToast("🗂️ .json ဖိုင် Download ပြီးပါပြီ");
