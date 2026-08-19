@@ -164,12 +164,6 @@
         .output-panel { display: none; }
         .output-panel.active { display: block; }
 
-        .output-box {
-            background-color: var(--input-bg); border-left: 4px solid var(--accent); padding: 18px;
-            border-radius: 12px; font-family: monospace; font-size: 0.9rem; white-space: pre-wrap;
-            color: var(--text-color); max-height: 450px; overflow-y: auto; margin-bottom: 15px;
-        }
-
         .scene-item-box {
             background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 12px;
             padding: 14px; margin-bottom: 12px; position: relative;
@@ -265,7 +259,7 @@
         </div>
 
         <div class="card">
-            <div class="section-header">01 / Creative Brief & Advanced Story Mode</div>
+            <div class="section-header">01 / Creative Brief & Step-by-Step Control</div>
             <h1>Shape your vision</h1>
             
             <label>What are we making?</label>
@@ -278,6 +272,7 @@
                 <div class="chip" onclick="useTemplate('ရှေးခေတ် မြန်မာ့နန်းတွင်း ဓားကိုင်ထားသော သူရဲကောင်း')">⚔️ ရှေးခေတ်နန်းတွင်း</div>
             </div>
 
+            <!-- STORY MODE SELECTOR -->
             <label>Story Mode (ဇာတ်လမ်းပုံစံ ရွေးချယ်ရန်)</label>
             <select id="storyMode">
                 <option value="short">ဇာတ်လမ်းတို (Short Story - 14 Scenes အသေးစိတ်အပီး)</option>
@@ -305,6 +300,7 @@
                 <option value="9:16 • Shorts / TikTok">9:16 • Shorts / TikTok</option>
             </select>
 
+            <!-- STEP-BY-STEP ACTION BUTTONS (Restored as requested) -->
             <button class="generate-btn" onclick="generateStep(1)">📜 Step 1: ဇာတ်ညွှန်းသီးသန့် (မြန်မာသန့်သန့်) အရင်ထုတ်မည်</button>
             <div class="step-action-group">
                 <button class="step-action-btn" onclick="generateStep(2)">🎨 Step 2: ပုံ Prompts ထုတ်မည်</button>
@@ -312,6 +308,7 @@
             </div>
         </div>
 
+        <!-- STATUS WIDGET -->
         <div class="status-card" id="statusCard" style="display:none;">
             <div class="status-header-row">
                 <span class="status-title-tag">Step-by-Step Production</span>
@@ -325,6 +322,7 @@
             </div>
         </div>
 
+        <!-- OUTPUT TABS CARD -->
         <div class="card" id="blueprintCard" style="display:none;">
             <div class="section-header">02 / Step-by-Step Production Output</div>
             <h1>Your creative direction</h1>
@@ -336,21 +334,18 @@
             </div>
 
             <div class="output-panel active" id="outputPanel1">
-                <label>Step 1: Strict Burmese Sequential Script (No English Mixing)</label>
+                <label>Step 1: Strict Burmese Sequential Script</label>
                 <div id="scriptScenesContainer"></div>
-                <div class="output-box" id="outputScriptContent" style="display:none;"></div>
             </div>
 
             <div class="output-panel" id="outputPanel2">
                 <label>Step 2: Prop-Bound Image Generation Prompts</label>
                 <div id="photoScenesContainer"></div>
-                <div class="output-box" id="outputPhotoContent" style="display:none;"></div>
             </div>
 
             <div class="output-panel" id="outputPanel3">
                 <label>Step 3: State-Locked Video Prompts</label>
                 <div id="videoScenesContainer"></div>
-                <div class="output-box" id="outputVideoContent" style="display:none;"></div>
             </div>
 
             <div class="export-group">
@@ -383,8 +378,8 @@
                         <div class="plan-price">0 ကျပ်</div>
                         <div class="plan-desc">အခြေခံအသုံးပြုသူများအတွက်</div>
                         <ul class="plan-features">
+                            <li>✔️ Step-by-Step Workflow Control</li>
                             <li>✔️ Short & Long Story Mode</li>
-                            <li>✔️ Strict Burmese Guardrails (No English mixing)</li>
                             <li>✔️ Scene-by-Scene Copy Buttons</li>
                             <li>✔️ .txt ဖိုင် Export</li>
                         </ul>
@@ -533,7 +528,6 @@
                 container.innerHTML = '<div style="color:var(--text-muted); text-align:center;">ဒေတာ မရှိသေးပါ။</div>';
                 return;
             }
-            // Split by Scene headers if possible, or paragraphs
             let parts = textContent.split(/(?=Scene \d+|ဇာတ်ဝင်ခန်း \d+)/i);
             if (parts.length <= 1) {
                 parts = textContent.split('\n\n');
@@ -554,14 +548,13 @@
         }
 
         function copySpecificScene(text) {
-            // Decode HTML entities if needed
             const decoded = text.replace(/&quot;/g, '"');
             navigator.clipboard.writeText(decoded).then(() => {
                 showToast("📋 ဤ Scene ကို Copy ကူးပြီးပါပြီ");
             });
         }
 
-        // STEP-BY-STEP GENERATION FUNCTION WITH STRICT BURMESE GUARDRAILS & STORY MODES
+        // STEP-BY-STEP GENERATION FUNCTION WITH STABLE MODEL VERSION
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -621,6 +614,7 @@ Story Idea: ${idea}`;
             document.getElementById('statusSubText').innerText = stepTitle;
 
             try {
+                // CORRECTED MODEL VERSION COMPATIBLE WITH v1beta API
                 let targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
                 let fetchUrl = isVIP ? targetUrl : "https://api.allorigins.win/raw?url=" + encodeURIComponent(targetUrl);
 
@@ -632,20 +626,18 @@ Story Idea: ${idea}`;
 
                 const data = await response.json();
                 if(data.error) throw new Error(data.error.message);
+                if(!data.candidates || !data.candidates[0].content) throw new Error("Invalid API response format received.");
 
                 const resultText = data.candidates[0].content.parts[0].text;
 
                 if (stepNo === 1) {
                     scriptOutput = resultText;
-                    document.getElementById('outputScriptContent').innerText = scriptOutput;
                     renderSceneCards('scriptScenesContainer', scriptOutput);
                 } else if (stepNo === 2) {
                     photoOutput = resultText;
-                    document.getElementById('outputPhotoContent').innerText = photoOutput;
                     renderSceneCards('photoScenesContainer', photoOutput);
                 } else {
                     videoOutput = resultText;
-                    document.getElementById('outputVideoContent').innerText = videoOutput;
                     renderSceneCards('videoScenesContainer', videoOutput);
                 }
 
@@ -653,7 +645,7 @@ Story Idea: ${idea}`;
                 document.getElementById('blueprintCard').style.display = 'block';
                 switchTab(stepNo);
 
-                saveToHistory(idea.slice(0, 20) + ` (${storyMode === 'short' ? 'Short 14S' : 'Long Story'})`, resultText, style);
+                saveToHistory(idea.slice(0, 20) + ` (Step ${stepNo} - ${storyMode})`, resultText, style);
                 showToast(`🎉 Step ${stepNo} အောင်မြင်စွာ ပြီးစီးပါပြီ!`);
                 document.getElementById('blueprintCard').scrollIntoView({ behavior: 'smooth' });
 
@@ -674,7 +666,7 @@ Story Idea: ${idea}`;
         function renderHistory() {
             const listEl = document.getElementById('historyList');
             if(projectHistory.length === 0) {
-                listEl.innerHTML = `<p style="color: var(--text-muted); text-align: center; margin: 10px 0;">သိမ်းဆည်းထားသော ဇာတ်လမ်းမှတ်တမ်း မရှိသေးပါ။</p>`;
+                listEl.innerHTML = `<p style="color: var(--text-muted); text-align: center; margin: 10px 0;">မှတ်တမ်း မရှိသေးပါ။</p>`;
                 return;
             }
             let html = '';
@@ -690,7 +682,6 @@ Story Idea: ${idea}`;
         function loadHistory(idx) {
             const item = projectHistory[idx];
             scriptOutput = item.content;
-            document.getElementById('outputScriptContent').innerText = scriptOutput;
             renderSceneCards('scriptScenesContainer', scriptOutput);
             document.getElementById('blueprintCard').style.display = 'block';
             switchTab(1);
@@ -723,7 +714,7 @@ Story Idea: ${idea}`;
             const blob = new Blob([fullCombined], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `Advanced_Story_Prompts.txt`;
+            link.download = `Step_By_Step_Prompts.txt`;
             link.click();
             showToast("📥 Download ပြီးပါပြီ");
         }
