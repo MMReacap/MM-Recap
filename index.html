@@ -217,7 +217,7 @@
             background: var(--primary-glow);
         }
 
-        /* PRODUCTION STATUS LOADING WIDGET STYLES */
+        /* LIVE PRODUCTION STATUS LOADING WIDGET STYLES */
         .status-card {
             background: rgba(15, 14, 23, 0.95);
             border: 1px solid var(--primary);
@@ -398,12 +398,12 @@
 
         <div class="card" id="vipActivationCard" style="border-color: var(--primary);">
             <div class="section-header" id="vipCardHeader">👑 VIP Membership Activation</div>
-            <label id="vipLabel">SCD-VIP Code ထည့်သွင်းရန်</label>
+            <label id="vipLabel">SCD-VIP Code ထည့်သွင်းရန် (ဥပမာ - SCD-VIP-8899)</label>
             <div class="vip-activate-box">
-                <input type="text" id="vipCodeInput" class="vip-input" placeholder="ဥပမာ - SCD-VIP-8899 သို့မဟုတ် SCD-VIP-9988">
+                <input type="text" id="vipCodeInput" class="vip-input" placeholder="SCD-VIP-XXXX ထည့်ပါ">
                 <button class="activate-btn" onclick="activateVIPCode()">✨ Activate VIP</button>
             </div>
-            <div id="vipStatusMsg" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">Status: Free Plan (Proxy Enabled)</div>
+            <div id="vipStatusMsg" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">Status: Free Plan</div>
         </div>
 
         <div class="card">
@@ -538,27 +538,27 @@
                     <div>
                         <div class="plan-title">Free Plan</div>
                         <div class="plan-price">0 ကျပ်</div>
-                        <div class="plan-desc">VPN မလိုဘဲ အခမဲ့ စတင်အသုံးပြုနိုင်သည်</div>
+                        <div class="plan-desc">အခြေခံအသုံးပြုသူများအတွက်</div>
                         <ul class="plan-features">
                             <li>✔️ ဇာတ်လမ်း Blueprint များ ဖန်တီးနိုင်ခြင်း</li>
                             <li>✔️ .txt ဖိုင် Export</li>
-                            <li>✔️ Proxy စနစ်ဖြင့် ချိတ်ဆက်ပေးခြင်း (VPN မလိုပါ)</li>
-                            <li>❌ .srt နှင့် .json ဖိုင်များ မပါဝင်ပါ</li>
+                            <li>❌ .srt နှင့် .json ဖိုင်များ မပါဝင်ပါ။ (VIP သီးသန့်)</li>
+                            <li>❌ ကြော်ငြာများ ပါဝင်ပါမည်</li>
                         </ul>
                     </div>
-                    <button class="plan-btn" id="freePlanBtn" disabled>လက်ရှိ အသုံးပြုနေဆဲ</button>
+                    <button class="plan-btn" id="freePlanBtn">လက်ရှိ အသုံးပြုနေဆဲ</button>
                 </div>
 
                 <div class="plan-card" style="border-color: rgba(139, 92, 246, 0.4);">
                     <div>
                         <div class="plan-title" style="color: #c084fc;">VIP Premium</div>
                         <div class="plan-price">10,000 MMK</div>
-                        <div class="plan-desc">လုပ်ဆောင်ချက် အားလုံးကို အကန့်အသတ်မရှိ သုံးရန်</div>
+                        <div class="plan-desc">ပရိုဖက်ရှင်နယ် ဖန်တီးသူများအတွက် အထူးသင့်လျော်သည်</div>
                         <ul class="plan-features">
                             <li>🌟 <strong>Direct API Access (အမြန်ဆုံး)</strong></li>
                             <li>🌟 <strong>.srt (စာတန်းထိုးဖိုင်) & .json ဖိုင် Export</strong></li>
-                            <li>🌟 ကြော်ငြာ လုံးဝမပါဝင်ပါ (Ad-Free)</li>
-                            <li>🌟 ရွှေရောင် VIP အပြင်အဆင် (UI)</li>
+                            <li>🌟 <strong>ကြော်ငြာ လုံးဝမပါဝင်ပါ (Ad-Free)</strong></li>
+                            <li>🌟 <strong>ရွှေရောင် VIP အပြင်အဆင် (UI)</strong></li>
                         </ul>
                     </div>
                     <a href="https://t.me/storycutdrama" target="_blank" class="plan-btn vip-btn">VIP ဝယ်ယူရန် ဆက်သွယ်မည်</a>
@@ -566,12 +566,10 @@
             </div>
         </div>
 
-        <div class="card" style="margin-top: 25px;">
+        <div class="contact-box" style="margin-top: 25px;">
             <div class="section-header" style="text-align: center;">Contact & Support</div>
-            <div class="contact-box" style="margin-top: 15px;">
-                <div class="contact-item">📞 KPay / Phone: <span style="color: var(--accent);">09754615598</span></div>
-                <div class="contact-item">💬 Telegram: <a href="https://t.me/storycutdrama" target="_blank" class="contact-link">https://t.me/storycutdrama</a></div>
-            </div>
+            <div class="contact-item">📞 KPay / Phone: <span style="color: var(--accent);">09754615598</span></div>
+            <div class="contact-item">💬 Telegram: <a href="https://t.me/storycutdrama" target="_blank" class="contact-link">https://t.me/storycutdrama</a></div>
         </div>
 
     </div>
@@ -634,14 +632,15 @@
             const code = document.getElementById('vipCodeInput').value.trim();
             if(!code) { alert('⚠️ ကျေးဇူးပြု၍ SCD-VIP Code ထည့်ပါ။'); return; }
             
-            if(code.startsWith('SCD-VIP-') && code.length > 8) {
+            // လက်ခံမည့် VIP ကုဒ်များ (SCD-VIP-8899 သို့မဟုတ် SCD-VIP-9988)
+            if(code === 'SCD-VIP-8899' || code === 'SCD-VIP-9988' || (code.startsWith('SCD-VIP-') && code.length > 8)) {
                 isVIP = true;
                 localStorage.setItem('mm_story_vip_active', 'true');
                 applyVIPUI();
                 showToast("🌟 ဧကရာဇ် VIP အဆင့်သို့ အောင်မြင်စွာ ရောက်ရှိပါပြီ!");
                 document.getElementById('vipCodeInput').value = '';
             } else {
-                alert('⚠️ ထည့်သွင်းထားသော Code ပုံစံ မှားယွင်းနေပါသည်။ (ဥပမာ - SCD-VIP-8899 သို့မဟုတ် SCD-VIP-9988)');
+                alert('⚠️ ထည့်သွင်းထားသော Code ပုံစံ မှားယွင်းနေပါသည်။ (ဥပမာ - SCD-VIP-8899)');
             }
         }
 
@@ -736,8 +735,9 @@ FORMAT REQUIREMENT: Include both the scene script/blueprint AND a dedicated sect
 
                 let targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
                 let fetchUrl = targetUrl;
+                
                 if (!isVIP) {
-                    fetchUrl = "https://corsproxy.io/?" + encodeURIComponent(targetUrl);
+                    fetchUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(targetUrl);
                 }
 
                 updateStep(3, "Structuring scenes and generating image prompts...");
@@ -810,7 +810,7 @@ FORMAT REQUIREMENT: Include both the scene script/blueprint AND a dedicated sect
         }
 
         function downloadTxt() {
-            const blob = new Blob([currentRawOutput], { type: 'text/plain;charset=utf-8' };
+            const blob = new Blob([currentRawOutput], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `Production_Blueprint_And_Prompts.txt`;
