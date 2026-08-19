@@ -41,15 +41,6 @@
             --header-gradient: linear-gradient(135deg, #7c3aed, #db2777) !important;
         }
 
-        [data-theme="light"][data-vip="true"] {
-            --bg-color: #fffbeb !important;
-            --card-bg: rgba(255, 251, 235, 0.95) !important;
-            --primary: #d97706 !important;
-            --primary-glow: rgba(217, 119, 6, 0.3) !important;
-            --border-color: rgba(217, 119, 6, 0.4) !important;
-            --header-gradient: linear-gradient(135deg, #d97706, #be185d) !important;
-        }
-
         body {
             font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, sans-serif;
             background-color: var(--bg-color);
@@ -179,24 +170,6 @@
         .export-btn { background: var(--input-bg); color: var(--text-color); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; font-size: 0.85rem; font-weight: bold; cursor: pointer; font-family: 'Pyidaungsu', sans-serif; flex: 1; text-align: center; }
         .locked-feature { opacity: 0.5; cursor: not-allowed !important; }
 
-        .vip-activate-box { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
-        .vip-input { margin-bottom: 0 !important; width: 100% !important; font-size: 1.05rem !important; padding: 16px !important; border: 2px solid var(--primary) !important; }
-        .activate-btn { background: var(--header-gradient); color: white; border: none; padding: 16px; border-radius: 14px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; text-align: center; }
-
-        .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .plan-card { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
-        .plan-title { font-size: 1.1rem; font-weight: bold; color: var(--text-color); margin-bottom: 5px; }
-        .plan-price { font-size: 1.25rem; font-weight: bold; color: var(--primary); margin-bottom: 10px; }
-        .plan-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px; }
-        .plan-features { font-size: 0.85rem; color: var(--text-color); padding-left: 15px; margin-bottom: 20px; }
-        .plan-features li { margin-bottom: 6px; }
-        .plan-btn { background: var(--border-color); color: var(--text-color); width: 100%; padding: 12px; border-radius: 10px; font-weight: bold; text-align: center; border: none; cursor: pointer; text-decoration: none; display: inline-block; box-sizing: border-box; }
-        .vip-btn { background: var(--header-gradient); color: white; }
-
-        .contact-box { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; text-align: center; }
-        .contact-item { font-size: 0.95rem; margin-bottom: 10px; font-weight: bold; color: var(--text-color); }
-        .contact-link { color: #38bdf8; text-decoration: none; }
-
         .history-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .clear-history-btn { background: #dc2626; color: white; border: none; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; cursor: pointer; }
         .history-item { background: var(--input-bg); padding: 14px 18px; border-radius: 12px; margin-bottom: 10px; cursor: pointer; border: 1px solid var(--border-color); }
@@ -251,9 +224,9 @@
         <div class="card" id="vipActivationCard" style="border-color: var(--primary);">
             <div class="section-header" id="vipCardHeader">👑 VIP Membership Activation</div>
             <label id="vipLabel">SCD-VIP Code ထည့်သွင်းရန် (ဥပမာ - SCD-VIP-8899)</label>
-            <div class="vip-activate-box">
-                <input type="text" id="vipCodeInput" class="vip-input" placeholder="SCD-VIP-XXXX ထည့်ပါ">
-                <button class="activate-btn" onclick="activateVIPCode()">✨ Activate VIP</button>
+            <div class="vip-activate-box" style="display:flex; flex-direction:column; gap:12px; margin-top:12px;">
+                <input type="text" id="vipCodeInput" class="vip-input" placeholder="SCD-VIP-XXXX ထည့်ပါ" style="margin-bottom:0 !important; width:100% !important; font-size:1.05rem !important; padding:16px !important; border:2px solid var(--primary) !important;">
+                <button class="activate-btn" onclick="activateVIPCode()" style="background:var(--header-gradient); color:white; border:none; padding:16px; border-radius:14px; font-size:1rem; font-weight:bold; cursor:pointer; width:100%; text-align:center;">✨ Activate VIP</button>
             </div>
             <div id="vipStatusMsg" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 12px;">Status: Free Plan</div>
         </div>
@@ -334,7 +307,7 @@
             </div>
 
             <div class="output-panel active" id="outputPanel1">
-                <label>Step 1: Strict Burmese Sequential Script</label>
+                <label>Step 1: Strict Burmese Sequential Script (Under 900 Words)</label>
                 <div id="scriptScenesContainer"></div>
             </div>
 
@@ -372,34 +345,34 @@
             <h1 style="text-align: center; font-size: 1.4rem; margin-bottom: 15px;">Free နှင့် VIP (10,000 ကျပ် / လ) အစီအစဉ်များ</h1>
             
             <div class="plan-grid">
-                <div class="plan-card">
+                <div class="plan-card" style="background:var(--input-bg); border:1px solid var(--border-color); border-radius:16px; padding:20px; display:flex; flex-direction:column; justify-content:space-between;">
                     <div>
-                        <div class="plan-title">Free Plan</div>
-                        <div class="plan-price">0 ကျပ်</div>
-                        <div class="plan-desc">အခြေခံအသုံးပြုသူများအတွက်</div>
-                        <ul class="plan-features">
+                        <div class="plan-title" style="font-size:1.1rem; font-weight:bold; color:var(--text-color); margin-bottom:5px;">Free Plan</div>
+                        <div class="plan-price" style="font-size:1.25rem; font-weight:bold; color:var(--primary); margin-bottom:10px;">0 ကျပ်</div>
+                        <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">အခြေခံအသုံးပြုသူများအတွက်</div>
+                        <ul class="plan-features" style="font-size:0.85rem; color:var(--text-color); padding-left:15px; margin-bottom:20px;">
                             <li>✔️ Step-by-Step Workflow Control</li>
                             <li>✔️ Short & Long Story Mode</li>
                             <li>✔️ Scene-by-Scene Copy Buttons</li>
                             <li>✔️ .txt ဖိုင် Export</li>
                         </ul>
                     </div>
-                    <button class="plan-btn" id="freePlanBtn">လက်ရှိ အသုံးပြုနေဆဲ</button>
+                    <button class="plan-btn" id="freePlanBtn" style="background:var(--border-color); color:var(--text-color); width:100%; padding:12px; border-radius:10px; font-weight:bold; text-align:center; border:none;">လက်ရှိ အသုံးပြုနေဆဲ</button>
                 </div>
 
-                <div class="plan-card" style="border-color: rgba(139, 92, 246, 0.4);">
+                <div class="plan-card" style="background:var(--input-bg); border:1px solid rgba(139, 92, 246, 0.4); border-radius:16px; padding:20px; display:flex; flex-direction:column; justify-content:space-between;">
                     <div>
-                        <div class="plan-title" style="color: #c084fc;">VIP Premium</div>
-                        <div class="plan-price">10,000 MMK</div>
-                        <div class="plan-desc">ပရိုဖက်ရှင်နယ် ဖန်တီးသူများအတွက် အထူးသင့်လျော်သည်</div>
-                        <ul class="plan-features">
+                        <div class="plan-title" style="font-size:1.1rem; font-weight:bold; color:#c084fc; margin-bottom:5px;">VIP Premium</div>
+                        <div class="plan-price" style="font-size:1.25rem; font-weight:bold; color:var(--primary); margin-bottom:10px;">10,000 MMK</div>
+                        <div class="plan-desc" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">ပရိုဖက်ရှင်နယ် ဖန်တီးသူများအတွက် အထူးသင့်လျော်သည်</div>
+                        <ul class="plan-features" style="font-size:0.85rem; color:var(--text-color); padding-left:15px; margin-bottom:20px;">
                             <li>🌟 <strong>Direct API Access (အမြန်ဆုံး)</strong></li>
                             <li>🌟 <strong>.srt & .json ဖိုင် Export</strong></li>
                             <li>🌟 <strong>ကြော်ငြာ လုံးဝမပါဝင်ပါ (Ad-Free)</strong></li>
                             <li>🌟 <strong>ရွှေရောင် VIP အပြင်အဆင် (UI)</strong></li>
                         </ul>
                     </div>
-                    <a href="https://t.me/storycutdrama" target="_blank" class="plan-btn vip-btn">VIP ဝယ်ယူရန် ဆက်သွယ်မည်</a>
+                    <a href="https://t.me/storycutdrama" target="_blank" class="plan-btn vip-btn" style="background:var(--header-gradient); color:white; width:100%; padding:12px; border-radius:10px; font-weight:bold; text-align:center; text-decoration:none; display:inline-block; box-sizing:border-box;">VIP ဝယ်ယူရန် ဆက်သွယ်မည်</a>
                 </div>
             </div>
         </div>
@@ -554,7 +527,7 @@
             });
         }
 
-        // 🛠️ FIXED PROMPT TO PREVENT HEADER LEAKAGE AND CLEAN UP BURMESE SCRIPT OUTPUT
+        // 🛠️ WORD COUNT STRICTLY UNDER 900 WORDS FOR YT CREATE COMPATIBILITY
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -575,36 +548,38 @@
             let stepTitle = "";
 
             let sceneCountInstruction = storyMode === 'short' 
-                ? "Generate a complete short story in approximately 14 distinct scenes (Scene 1 to Scene 14)." 
-                : "Generate an epic long story with continuous expansive scenes (up to 16-20 scenes) maintaining deep chronological narrative flow.";
+                ? "Generate a complete short story in exactly 10 concise scenes (Scene 1 to Scene 10)." 
+                : "Generate a compact story in 12 concise scenes maintaining good flow.";
 
             if (stepNo === 1) {
-                stepTitle = "Generating Strict Burmese Script...";
-                promptText = `You are a strict Professional Burmese Scriptwriter. Output ONLY pure Burmese script content. DO NOT output metadata, titles, styles, or emotional tone summaries at the beginning. Start immediately with Scene 1.
+                stepTitle = "Generating Concise Burmese Script (<900 words)...";
+                promptText = `You are a strict Professional Burmese Scriptwriter. Output ONLY pure Burmese script content under 900 words total. DO NOT output metadata, titles, styles, or summaries. Start immediately with Scene 1.
 STRICT GUARDRAILS:
 1. ${sceneCountInstruction}
-2. SCRIPT FORMAT: Use explicit Scene headers (e.g., "Scene 1: ...").
-3. AUDIO TIMING & LOCK: Every line must have an explicit speaker name lock. Narrator must finish describing before character dialogue. Format: "[Narrator]: ..." and "[Character Name]: ...".
-4. PROP LOCK: Keep object/prop consistency identical throughout all scenes based on user brief.
-5. NO HALLUCINATION: Strictly adhere to user's idea without wandering off.
+2. LENGTH LIMIT: The entire output MUST be strictly under 900 words total so it fits perfectly into YT Create editors. Each scene must be concise, optimized for a 10-second clip.
+3. SCRIPT FORMAT: Use explicit Scene headers (e.g., "Scene 1: ...").
+4. AUDIO TIMING & LOCK: Every line must have an explicit speaker name lock. Narrator must finish describing before character dialogue. Format: "[Narrator]: ..." and "[Character Name]: ...".
+5. PROP LOCK: Keep object/prop consistency identical throughout all scenes.
 
 Story Idea: ${idea}`;
             } else if (stepNo === 2) {
-                stepTitle = "Generating Prop-Bound Image Prompts...";
-                promptText = `You are an expert Prompt Engineer. Based on the story idea below, create ONLY Image Generation Prompts (Midjourney/DALL-E) scene-by-scene in English.
+                stepTitle = "Generating Concise Image Prompts (<900 words)...";
+                promptText = `You are an expert Prompt Engineer. Create ONLY Image Generation Prompts (Midjourney/DALL-E) scene-by-scene in English.
 STRICT RULES:
 1. ${sceneCountInstruction}
-2. PROP BINDING: Strictly enforce the specific prop across all scenes without random item swaps.
-3. Visual Style/Preset: ${style}, Aspect Ratio: ${ratio}.
+2. LENGTH LIMIT: Total output MUST be under 900 words.
+3. PROP BINDING: Strictly enforce the specific prop across all scenes.
+4. Visual Style/Preset: ${style}, Aspect Ratio: ${ratio}.
 
 Story Idea: ${idea}`;
             } else {
-                stepTitle = "Generating State-Locked Video Prompts...";
+                stepTitle = "Generating Concise Video Prompts (<900 words)...";
                 promptText = `You are an expert Video Director. Create ONLY Video Generation Prompts (Sora/Runway/Luma) scene-by-scene in English, optimized for 5-10 second clips.
 STRICT RULES:
 1. ${sceneCountInstruction}
-2. Focus on camera movement, framing, and maintaining exact object state in hand.
-3. Visual Style: ${style}.
+2. LENGTH LIMIT: Total output MUST be under 900 words.
+3. Focus on camera movement, framing, and maintaining exact object state.
+4. Visual Style: ${style}.
 
 Story Idea: ${idea}`;
             }
