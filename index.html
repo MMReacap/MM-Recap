@@ -554,7 +554,7 @@
             });
         }
 
-        // 🛠️ UPDATED: Using gemini-3.6-flash model as explicitly demanded by Google's latest system updates
+        // 🛠️ FIXED PROMPT TO PREVENT HEADER LEAKAGE AND CLEAN UP BURMESE SCRIPT OUTPUT
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -580,7 +580,7 @@
 
             if (stepNo === 1) {
                 stepTitle = "Generating Strict Burmese Script...";
-                promptText = `You are a strict Professional Burmese Scriptwriter. Output ONLY in pure Burmese language (မြန်မာဘာသာ သက်သက်). NO ENGLISH TEXT ALLOWED IN THE DIALOGUE OR NARRATION.
+                promptText = `You are a strict Professional Burmese Scriptwriter. Output ONLY pure Burmese script content. DO NOT output metadata, titles, styles, or emotional tone summaries at the beginning. Start immediately with Scene 1.
 STRICT GUARDRAILS:
 1. ${sceneCountInstruction}
 2. SCRIPT FORMAT: Use explicit Scene headers (e.g., "Scene 1: ...").
@@ -588,9 +588,7 @@ STRICT GUARDRAILS:
 4. PROP LOCK: Keep object/prop consistency identical throughout all scenes based on user brief.
 5. NO HALLUCINATION: Strictly adhere to user's idea without wandering off.
 
-Story Idea: ${idea}
-Style: ${style}
-Tone: ${tone}`;
+Story Idea: ${idea}`;
             } else if (stepNo === 2) {
                 stepTitle = "Generating Prop-Bound Image Prompts...";
                 promptText = `You are an expert Prompt Engineer. Based on the story idea below, create ONLY Image Generation Prompts (Midjourney/DALL-E) scene-by-scene in English.
