@@ -554,7 +554,7 @@
             });
         }
 
-        // 🛠️ 100% WORKING DIRECT FETCH (REMOVED BROKEN PROXY)
+        // 🛠️ CLEANED & FIXED: 100% Valid JSON Payload without any unknown query parameters
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -614,7 +614,6 @@ Story Idea: ${idea}`;
             document.getElementById('statusSubText').innerText = stepTitle;
 
             try {
-                // တိုက်ရိုက်ခေါ်ဆိုရန် မူလတရားဝင် v1beta endpoint နှင့် gemini-1.5-flash မော်ဒယ်
                 let fetchUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(fetchUrl, {
