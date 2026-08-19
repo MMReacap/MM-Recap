@@ -117,8 +117,15 @@
         .generate-btn {
             background: var(--header-gradient); color: white; border: none; width: 100%;
             padding: 16px; border-radius: 14px; font-size: 1.05rem; font-weight: bold; cursor: pointer;
-            box-shadow: 0 10px 30px var(--primary-glow); font-family: 'Pyidaungsu', sans-serif;
+            box-shadow: 0 10px 30px var(--primary-glow); font-family: 'Pyidaungsu', sans-serif; margin-bottom: 10px;
         }
+
+        .step-action-group { display: flex; gap: 10px; }
+        .step-action-btn {
+            background: var(--input-bg); border: 1px solid var(--primary); color: var(--primary);
+            padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; flex: 1; text-align: center;
+        }
+        .step-action-btn:hover { background: var(--primary); color: white; }
 
         .api-group { display: flex; gap: 10px; margin-top: 10px; }
         .save-btn { background: #059669; color: white; border: none; padding: 10px 16px; border-radius: 10px; font-weight: bold; cursor: pointer; font-family: 'Pyidaungsu', sans-serif; flex: 1; }
@@ -132,7 +139,7 @@
         }
         .quick-tool-btn:hover { border-color: var(--primary); background: var(--primary-glow); }
 
-        /* LIVE PRODUCTION STATUS LOADING WIDGET */
+        /* STATUS WIDGET */
         .status-card {
             background: rgba(15, 14, 23, 0.95); border: 1px solid var(--primary); border-radius: 20px;
             padding: 24px; margin-bottom: 25px; box-shadow: 0 0 25px var(--primary-glow);
@@ -142,25 +149,11 @@
         .status-badge { background: rgba(16, 185, 129, 0.15); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; letter-spacing: 1px; }
         .status-main-heading { font-size: 1.2rem; font-weight: bold; color: var(--text-color); margin-bottom: 20px; }
         
-        .steps-container { display: flex; align-items: center; justify-content: space-between; position: relative; margin-bottom: 25px; padding: 0 10px; }
-        .steps-container::before { content: ''; position: absolute; top: 20px; left: 30px; right: 30px; height: 2px; background: var(--border-color); z-index: 1; }
-        .step-item { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; }
-        .step-circle {
-            width: 40px; height: 40px; border-radius: 50%; background: var(--input-bg); border: 2px solid var(--border-color);
-            display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; color: var(--text-muted);
-            transition: all 0.3s ease; margin-bottom: 8px;
-        }
-        .step-label { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; }
-        .step-item.completed .step-circle { background: rgba(16, 185, 129, 0.2); border-color: var(--accent); color: var(--accent); }
-        .step-item.completed .step-label { color: var(--text-color); }
-        .step-item.active .step-circle { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 0 20px var(--primary-glow); transform: scale(1.1); }
-        .step-item.active .step-label { color: var(--primary); }
-
         .status-footer-msg { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--text-muted); }
         .spinner { width: 18px; height: 18px; border: 2px solid var(--border-color); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* THREE SEPARATE TABS / OUTPUT SECTIONS */
+        /* TABS */
         .output-tabs { display: flex; gap: 8px; margin-bottom: 15px; }
         .tab-btn {
             background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-muted);
@@ -259,30 +252,25 @@
         </div>
 
         <div class="card">
-            <div class="section-header">01 / Creative Brief</div>
+            <div class="section-header">01 / Creative Brief & Step-by-Step Control</div>
             <h1>Shape your vision</h1>
             
             <label>What are we making?</label>
-            <textarea id="storyIdea" placeholder="မြန်မာဇာတ်လမ်း၊ ဇာတ်ကောင်/တိရစ္ဆာန်၊ နေရာ၊ ဖြစ်ရပ်များ၊ voiceover နှင့် scene အရေအတွက်ကို ရေးပါ။"></textarea>
+            <textarea id="storyIdea" placeholder="မြန်မာဇာတ်လမ်း၊ ဇာတ်ကောင်၊ နေရာ၊ ကိုင်မည့်ပစ္စည်း (ဥပမာ - မီးအိမ် / ပုလွေ) နှင့် ဇာတ်ဝင်ခန်း အရေအတွက်ကို ရေးပါ။"></textarea>
             
             <label style="font-size: 0.8rem; color: var(--primary);">⚡ အသင့်သုံး ဇာတ်လမ်း ပုံစံခွဲများ (Templates)</label>
             <div class="template-chips">
-                <div class="chip" onclick="useTemplate('ရွာစွန်က လျှို့ဝှက်ဆန်းကြယ် တောအုပ်ကြီး၊ သက်ကြီးရွယ်အို ဆရာကြီးတစ်ဦး ပါဝင်သော 3D ဇာတ်လမ်း')">🌲 တောအုပ်ဆန်းကြယ်</div>
-                <div class="chip" onclick="useTemplate('အာကာသ စူးစမ်းရှာဖွေရေး အဖွဲ့တစ်ဖွဲ့ ဂြိုဟ်အသစ်တစ်ခုပေါ်သို့ ဆင်းသက်ခြင်း')">🚀 အာကာသစွန့်စားခန်း</div>
-                <div class="chip" onclick="useTemplate('ရှေးခေတ် မြန်မာ့နန်းတွင်း သူရဲကောင်းတစ်ဦး၏ သစ္စာတရားနှင့် တိုက်ပွဲ')">⚔️ ရှေးခေတ်နန်းတွင်း</div>
-                <div class="chip" onclick="useTemplate('ချစ်စရာ တိရစ္ဆာန်လေးများ တောတွင်းခရီးထွက်ကြစဉ် ကြုံရသော ပျော်စရာအဖြစ်အပျက်များ')">🐾 တိရစ္ဆာန်ဟာသ</div>
+                <div class="chip" onclick="useTemplate('ရွာစွန်က လျှို့ဝှက်ဆန်းကြယ် တောအုပ်ကြီး၊ ပုလွေကိုင်ထားသော လူငယ်တစ်ဦး')">🌲 တောအုပ်ဆန်းကြယ်</div>
+                <div class="chip" onclick="useTemplate('တောင်ပေါ်ရွာလေးတွင် မီးအိမ်ကိုင်ကာ လမ်းလျှောက်နေသော မိန်းကလေး')">🏮 တောင်ပေါ်ရွာ</div>
+                <div class="chip" onclick="useTemplate('ရှေးခေတ် မြန်မာ့နန်းတွင်း ဓားကိုင်ထားသော သူရဲကောင်း')">⚔️ ရှေးခေတ်နန်းတွင်း</div>
             </div>
 
-            <label>Character DNA / Reference Lock</label>
-            <input type="text" id="charDNA" placeholder="ဥပမာ - U Ba, old wise man with walking stick, grey beard, green longyi">
-
-            <label>Visual Style</label>
+            <label>Character & Visual Preset</label>
             <select id="visualStyle">
-                <option value="Stylized 3D cinematic">Stylized 3D cinematic</option>
-                <option value="Disney Pixar-inspired 3D">Disney Pixar-inspired 3D</option>
-                <option value="Hyper-realistic cinematic">Hyper-realistic cinematic</option>
-                <option value="Watercolor storybook">Watercolor storybook</option>
-                <option value="Anime-inspired 3D">Anime-inspired 3D</option>
+                <option value="Stylized 3D cinematic, consistent character model">Stylized 3D cinematic (Pixar-like)</option>
+                <option value="Disney Pixar-inspired 3D animation, highly consistent character">Disney Pixar-inspired 3D</option>
+                <option value="Hyper-realistic cinematic film style">Hyper-realistic cinematic</option>
+                <option value="Watercolor storybook illustration style">Watercolor storybook</option>
             </select>
 
             <label>Emotional Tone</label>
@@ -290,16 +278,12 @@
                 <option value="Warm and inspiring">Warm and inspiring</option>
                 <option value="Tense and suspenseful">Tense and suspenseful</option>
                 <option value="Joyful and playful">Joyful and playful</option>
-                <option value="Emotional and heartfelt">Emotional and heartfelt</option>
-                <option value="Epic and heroic">Epic and heroic</option>
             </select>
 
             <label>Aspect Ratio</label>
             <select id="aspectRatio">
                 <option value="16:9 • YouTube">16:9 • YouTube</option>
                 <option value="9:16 • Shorts / TikTok">9:16 • Shorts / TikTok</option>
-                <option value="1:1 • Square">1:1 • Square</option>
-                <option value="4:5 • Portrait">4:5 • Portrait</option>
             </select>
 
             <label>Scene Count</label>
@@ -307,15 +291,6 @@
                 <option value="3 scenes">3 scenes</option>
                 <option value="4 scenes" selected>4 scenes</option>
                 <option value="6 scenes">6 scenes</option>
-                <option value="8 scenes">8 scenes</option>
-                <option value="12 scenes">12 scenes</option>
-            </select>
-
-            <label>Voiceover Mode</label>
-            <select id="voiceoverMode">
-                <option value="Mixed">Mixed (Voiceover + Dialogue)</option>
-                <option value="Narrator">Narrator</option>
-                <option value="Dialogue">Dialogue</option>
             </select>
 
             <label>Output Language</label>
@@ -325,69 +300,48 @@
                 <option value="English">English</option>
             </select>
 
-            <button class="generate-btn" onclick="generateBlueprint()">✨ Generate Master Synchronized Prompts →</button>
+            <button class="generate-btn" onclick="generateStep(1)">📜 Step 1: ဇာတ်ညွှန်းသီးသန့် အရင်ထုတ်မည်</button>
+            <div class="step-action-group">
+                <button class="step-action-btn" onclick="generateStep(2)">🎨 Step 2: ပုံ Prompts ထုတ်မည်</button>
+                <button class="step-action-btn" onclick="generateStep(3)">🎬 Step 3: ဗီဒီယို Prompts ထုတ်မည်</button>
+            </div>
         </div>
 
-        <!-- LIVE PRODUCTION STATUS LOADING WIDGET -->
         <div class="status-card" id="statusCard" style="display:none;">
             <div class="status-header-row">
-                <span class="status-title-tag">Production Status</span>
+                <span class="status-title-tag">Step-by-Step Production</span>
                 <span class="status-badge" id="statusBadgeTag">RUNNING</span>
             </div>
-            <div class="status-main-heading" id="statusHeadingText">Generation in progress</div>
+            <div class="status-main-heading" id="statusHeadingText">Processing step...</div>
             
-            <div class="steps-container">
-                <div class="step-item completed" id="step1">
-                    <div class="step-circle" id="circle1">✓</div>
-                    <div class="step-label">Brief</div>
-                </div>
-                <div class="step-item active" id="step2">
-                    <div class="step-circle" id="circle2">2</div>
-                    <div class="step-label">Script</div>
-                </div>
-                <div class="step-item" id="step3">
-                    <div class="step-circle" id="circle3">3</div>
-                    <div class="step-label">Photos</div>
-                </div>
-                <div class="step-item" id="step4">
-                    <div class="step-circle" id="circle4">4</div>
-                    <div class="step-label">Videos</div>
-                </div>
-            </div>
-
             <div class="status-footer-msg">
                 <div class="spinner" id="statusSpinner"></div>
-                <span id="statusSubText">Enforcing strict master truth binding across script and image prompts...</span>
+                <span id="statusSubText">Enforcing strict property binding and sequence alignment...</span>
             </div>
         </div>
 
-        <!-- 3 SEPARATE OUTPUT TABS CARD -->
         <div class="card" id="blueprintCard" style="display:none;">
-            <div class="section-header">02 / Master Synchronized Production Output</div>
+            <div class="section-header">02 / Step-by-Step Production Output</div>
             <h1>Your creative direction</h1>
             
-            <!-- Tab Buttons -->
             <div class="output-tabs">
                 <button class="tab-btn active" id="tabBtn1" onclick="switchTab(1)">📜 ဇာတ်ညွှန်း (Script)</button>
                 <button class="tab-btn" id="tabBtn2" onclick="switchTab(2)">🎨 ပုံ Prompt (Photo)</button>
                 <button class="tab-btn" id="tabBtn3" onclick="switchTab(3)">🎬 ဗီဒီယို Prompt (Video)</button>
             </div>
 
-            <!-- Tab 1: Script Output -->
             <div class="output-panel active" id="outputPanel1">
-                <label>Script with STRICT Sequential Audio Flow & Named Locks</label>
+                <label>Step 1: Strict Sequential Script (Approved Prop Truth)</label>
                 <div class="output-box" id="outputScriptContent"></div>
             </div>
 
-            <!-- Tab 2: Photo Prompts Output -->
             <div class="output-panel" id="outputPanel2">
-                <label>Image Prompts (STRICTLY BOUND to Script Props - No Mismatch)</label>
+                <label>Step 2: Prop-Bound Image Generation Prompts</label>
                 <div class="output-box" id="outputPhotoContent"></div>
             </div>
 
-            <!-- Tab 3: Video Prompts Output -->
             <div class="output-panel" id="outputPanel3">
-                <label>Video Prompts (Consistent motion & synchronized states)</label>
+                <label>Step 3: State-Locked Video Prompts</label>
                 <div class="output-box" id="outputVideoContent"></div>
             </div>
 
@@ -418,10 +372,10 @@
                         <div class="plan-price">0 ကျပ်</div>
                         <div class="plan-desc">အခြေခံအသုံးပြုသူများအတွက်</div>
                         <ul class="plan-features">
-                            <li>✔️ Master Synchronized Prompt ထုတ်ပေးခြင်း</li>
-                            <li>✔️ Strict Audio & Prop Binding</li>
+                            <li>✔️ Step-by-Step Workflow Control</li>
+                            <li>✔️ Strict Prop & Audio Lock</li>
                             <li>✔️ .txt ဖိုင် Export</li>
-                            <li>❌ .srt နှင့် .json ဖိုင်များ မပါဝင်ပါ။ (VIP သီးသန့်)</li>
+                            <li>❌ .srt နှင့် .json ဖိုင်များ မပါဝင်ပါ။</li>
                         </ul>
                     </div>
                     <button class="plan-btn" id="freePlanBtn">လက်ရှိ အသုံးပြုနေဆဲ</button>
@@ -434,7 +388,7 @@
                         <div class="plan-desc">ပရိုဖက်ရှင်နယ် ဖန်တီးသူများအတွက် အထူးသင့်လျော်သည်</div>
                         <ul class="plan-features">
                             <li>🌟 <strong>Direct API Access (အမြန်ဆုံး)</strong></li>
-                            <li>🌟 <strong>.srt (စာတန်းထိုးဖိုင်) & .json ဖိုင် Export</strong></li>
+                            <li>🌟 <strong>.srt & .json ဖိုင် Export</strong></li>
                             <li>🌟 <strong>ကြော်ငြာ လုံးဝမပါဝင်ပါ (Ad-Free)</strong></li>
                             <li>🌟 <strong>ရွှေရောင် VIP အပြင်အဆင် (UI)</strong></li>
                         </ul>
@@ -489,18 +443,14 @@
             const current = document.documentElement.getAttribute('data-theme') || 'dark';
             const target = current === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', target);
-            try { 
-                localStorage.setItem('mm_story_theme', target); 
-            } catch(e) {}
+            try { localStorage.setItem('mm_story_theme', target); } catch(e) {}
             updateThemeButtonText(target);
-            showToast(target === 'light' ? "☀️ Light Mode သို့ ပြောင်းပြီးပါပြီ" : "🌙 Dark Mode သို့ ပြောင်းပြီးပါပြီ");
+            showToast(target === 'light' ? "☀️ Light Mode" : "🌙 Dark Mode");
         }
 
         function updateThemeButtonText(theme) {
             const btn = document.getElementById('themeToggleBtn');
-            if(btn) {
-                btn.innerText = theme === 'light' ? "🌙 Dark Mode" : "☀️ Light Mode";
-            }
+            if(btn) btn.innerText = theme === 'light' ? "🌙 Dark Mode" : "☀️ Light Mode";
         }
 
         function useTemplate(text) {
@@ -510,7 +460,7 @@
 
         function saveApiKey() {
             const key = document.getElementById('apiKeyInput').value.trim();
-            if(!key) { alert('⚠️ ကျေးဇူးပြု၍ API Key ထည့်ပါ။'); return; }
+            if(!key) { alert('⚠️ API Key ထည့်ပါ။'); return; }
             localStorage.setItem('mm_story_gemini_key', key);
             showToast("💾 API Key သိမ်းဆည်းပြီးပါပြီ။");
         }
@@ -523,25 +473,24 @@
 
         function activateVIPCode() {
             const code = document.getElementById('vipCodeInput').value.trim();
-            if(!code) { alert('⚠️ ကျေးဇူးပြု၍ SCD-VIP Code ထည့်ပါ။'); return; }
-            
+            if(!code) { alert('⚠️ SCD-VIP Code ထည့်ပါ။'); return; }
             if(code === 'SCD-VIP-8899' || code === 'SCD-VIP-9988' || (code.startsWith('SCD-VIP-') && code.length > 8)) {
                 isVIP = true;
                 localStorage.setItem('mm_story_vip_active', 'true');
                 applyVIPUI();
-                showToast("🌟 ဧကရာဇ် VIP အဆင့်သို့ အောင်မြင်စွာ ရောက်ရှိပါပြီ!");
+                showToast("🌟 VIP အဆင့်သို့ ရောက်ရှိပါပြီ!");
                 document.getElementById('vipCodeInput').value = '';
             } else {
-                alert('⚠️ ထည့်သွင်းထားသော Code ပုံစံ မှားယွင်းနေပါသည်။ (ဥပမာ - SCD-VIP-8899)');
+                alert('⚠️ Code ပုံစံ မှားယွင်းနေပါသည်။');
             }
         }
 
         function applyVIPUI() {
             document.documentElement.setAttribute('data-vip', 'true');
             document.getElementById('logoTitle').innerText = "👑 SCD ULTIMATE VIP STUDIO";
-            document.getElementById('vipCardHeader').innerText = "🌟 VIP MEMBER ACTIVE (GOLD STATUS)";
+            document.getElementById('vipCardHeader').innerText = "🌟 VIP MEMBER ACTIVE";
             document.getElementById('vipLabel').innerText = "👑 VIP စနစ် အပြည့်အစုံ ဖွင့်ထားပြီးပါပြီ";
-            document.getElementById('vipStatusMsg').innerHTML = "Status: <span style='color: #f59e0b; font-weight: bold;'>🌟 ULTIMATE VIP ACTIVE (Direct Connection & Ad-Free)</span>";
+            document.getElementById('vipStatusMsg').innerHTML = "Status: <span style='color: #f59e0b; font-weight: bold;'>🌟 VIP ACTIVE</span>";
             document.getElementById('freePlanBtn').innerText = "VIP Activated";
             
             const srtBtn = document.getElementById('srtBtn');
@@ -567,33 +516,14 @@
             document.getElementById('outputPanel' + tabNum).classList.add('active');
         }
 
-        function updateStep(stepNum, subText) {
-            for(let i = 1; i <= 4; i++) {
-                const item = document.getElementById('step' + i);
-                const circle = document.getElementById('circle' + i);
-                item.className = "step-item";
-                if(i < stepNum) {
-                    item.classList.add("completed");
-                    circle.innerText = "✓";
-                } else if(i === stepNum) {
-                    item.classList.add("active");
-                    circle.innerText = i;
-                } else {
-                    circle.innerText = i;
-                }
-            }
-            document.getElementById('statusSubText').innerText = subText;
-        }
-
-        async function generateBlueprint() {
+        // STEP-BY-STEP GENERATION FUNCTION
+        async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
-            const charDNA = document.getElementById('charDNA').value.trim();
             const style = document.getElementById('visualStyle').value;
             const tone = document.getElementById('emotionalTone').value;
             const ratio = document.getElementById('aspectRatio').value;
             const count = document.getElementById('sceneCount').value;
-            const voice = document.getElementById('voiceoverMode').value;
             const lang = document.getElementById('outputLang').value;
 
             if(!apiKey) { alert('⚠️ ကျေးဇူးပြု၍ API Key ထည့်ပါ။'); document.getElementById('apiKeyInput').focus(); return; }
@@ -604,53 +534,46 @@
             document.getElementById('blueprintCard').style.display = 'none';
             statusCard.scrollIntoView({ behavior: 'smooth' });
 
-            updateStep(1, "Analyzing creative brief and character DNA...");
+            let promptText = "";
+            let stepTitle = "";
 
-            try {
-                await new Promise(r => setTimeout(r, 600));
-                
-                updateStep(2, "Enforcing master synchronization across script and image prompts...");
-                await new Promise(r => setTimeout(r, 400));
-
-                // MASTER SYNCHRONIZED PROMPT LOCK (PREVENTS PROP MISMATCH & AUDIO OVERLAP)
-                const promptText = `Act as an expert Master AI Production Director. You must ensure absolute synchronization between the Script and the Image Prompts so that props (like a flute, lamp, or weapon) never mismatch.
-
-You MUST output your response in THREE clearly separated sections using these exact markdown headers:
-
-===SECTION_1_SCRIPT===
-[STRICT SYNCHRONIZED AUDIO SCRIPT]: 
-1. PROP CONSISTENCY TRUTH: First explicitly state the exact prop/item held by the character for each scene (e.g., "Prop: Bamboo flute"). 
-2. SEQUENTIAL AUDIO TIMING: The [Narrator] must completely finish describing the scene environment and action first. Only after the narrator's sentence ends completely, the [Character Name] (e.g., "[ကိုအောင်မြ]:") may speak their dialogue. NO OVERLAPPING.
-3. SPEAKER NAME LOCK: Every line of speech or narration must be strictly prefixed with either "[Narrator]:" or "[Character Name]:".
-
-===SECTION_2_PHOTO===
-[STRICT PROP-BOUND IMAGE PROMPTS]:
-- Provide ready-to-use Image Generation Prompts (for Midjourney/DALL-E/Bing) scene-by-scene.
-- ABSOLUTE BINDING RULE: The object/prop specified in Section 1 for that specific scene MUST be the exact and only object rendered in the image prompt (e.g., if Section 1 says bamboo flute, Section 2 image prompt must explicitly feature a bamboo flute, NEVER a lantern or anything else).
-- Incorporate Character DNA Lock: ${charDNA}
-
-===SECTION_3_VIDEO===
-[STRICT MOTION & STATE PRESERVATION PROMPTS]:
-- Provide ready-to-use Video Generation Prompts (for Sora/Runway/Luma/Kling) scene-by-scene.
-- Maintain consistent motion, camera angles, and verify the prop remains locked in hand throughout the shot.
+            if (stepNo === 1) {
+                stepTitle = "Generating Strict Sequential Script...";
+                promptText = `Act as an expert Scriptwriter. Create ONLY the Scene-by-Scene Audio Script for the following brief. 
+STRICT RULES:
+1. Define the exact prop/item held by characters in each scene (e.g., Prop: Lantern, Prop: Flute) and keep it consistent.
+2. Sequential Audio: [Narrator] must completely finish describing before any [Character Name] dialogue begins. No overlapping.
+3. Every line must have an explicit speaker name lock ("[Narrator]:" or "[Character Name]:").
 
 Story Idea: ${idea}
-Character DNA Lock: ${charDNA || 'Maintain absolute consistent character model'}
-Visual Style: ${style}
-Emotional Tone: ${tone}
-Aspect Ratio: ${ratio}
+Style: ${style}
 Scene Count: ${count}
-Voiceover Mode: ${voice}
-Output Language Mode: ${lang}`;
+Language: ${lang}`;
+            } else if (stepNo === 2) {
+                stepTitle = "Generating Prop-Bound Image Prompts...";
+                promptText = `Act as an expert Prompt Engineer. Based on the story idea below, create ONLY Image Generation Prompts (Midjourney/DALL-E) scene-by-scene.
+STRICT RULES:
+1. PROP BINDING: Strictly enforce the specific prop (e.g., if a lantern or flute is requested in the brief, it must be the exact same prop across all scenes. No random item swaps).
+2. Visual Style/Preset: ${style}, Aspect Ratio: ${ratio}.
 
+Story Idea: ${idea}
+Scene Count: ${count}`;
+            } else {
+                stepTitle = "Generating State-Locked Video Prompts...";
+                promptText = `Act as an expert Video Director. Create ONLY Video Generation Prompts (Sora/Runway/Luma) scene-by-scene.
+STRICT RULES:
+1. Focus on camera movement, framing, and maintaining exact object state in hand.
+2. Visual Style: ${style}.
+
+Story Idea: ${idea}
+Scene Count: ${count}`;
+            }
+
+            document.getElementById('statusSubText').innerText = stepTitle;
+
+            try {
                 let targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
-                let fetchUrl = targetUrl;
-                
-                if (!isVIP) {
-                    fetchUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(targetUrl);
-                }
-
-                updateStep(3, "Structuring synchronized prop-bound prompts...");
+                let fetchUrl = isVIP ? targetUrl : "https://api.allorigins.win/raw?url=" + encodeURIComponent(targetUrl);
 
                 const response = await fetch(fetchUrl, {
                     method: 'POST',
@@ -661,47 +584,30 @@ Output Language Mode: ${lang}`;
                 const data = await response.json();
                 if(data.error) throw new Error(data.error.message);
 
-                updateStep(4, "Validating master synchronization and finalizing...");
-                await new Promise(r => setTimeout(r, 500));
+                const resultText = data.candidates[0].content.parts[0].text;
 
-                const fullText = data.candidates[0].content.parts[0].text;
-                
-                scriptOutput = extractSection(fullText, "===SECTION_1_SCRIPT===", "===SECTION_2_PHOTO===");
-                photoOutput = extractSection(fullText, "===SECTION_2_PHOTO===", "===SECTION_3_VIDEO===");
-                videoOutput = extractSection(fullText, "===SECTION_3_VIDEO===", "===END===");
+                if (stepNo === 1) {
+                    scriptOutput = resultText;
+                    document.getElementById('outputScriptContent').innerText = scriptOutput;
+                } else if (stepNo === 2) {
+                    photoOutput = resultText;
+                    document.getElementById('outputPhotoContent').innerText = photoOutput;
+                } else {
+                    videoOutput = resultText;
+                    document.getElementById('outputVideoContent').innerText = videoOutput;
+                }
 
-                if(!scriptOutput.trim()) scriptOutput = fullText;
-                if(!photoOutput.trim()) photoOutput = "AI generated integrated inside script or check formatting.";
-                if(!videoOutput.trim()) videoOutput = "AI generated integrated inside script or check formatting.";
-
-                document.getElementById('outputScriptContent').innerText = scriptOutput;
-                document.getElementById('outputPhotoContent').innerText = photoOutput;
-                document.getElementById('outputVideoContent').innerText = videoOutput;
-                
                 statusCard.style.display = 'none';
                 document.getElementById('blueprintCard').style.display = 'block';
-                switchTab(1);
+                switchTab(stepNo);
 
-                saveToHistory(idea.slice(0, 25) + '...', fullText, style);
-                showToast("🎉 Master Synchronized Prompts အောင်မြင်စွာ ထွက်ရှိလာပါပြီ!");
+                saveToHistory(idea.slice(0, 20) + ' (Step ' + stepNo + ')', resultText, style);
+                showToast(`🎉 Step ${stepNo} အောင်မြင်စွာ ပြီးစီးပါပြီ!`);
                 document.getElementById('blueprintCard').scrollIntoView({ behavior: 'smooth' });
 
             } catch (err) {
                 statusCard.style.display = 'none';
                 alert('⚠️ Error: ' + err.message);
-            }
-        }
-
-        function extractSection(text, startTag, endTag) {
-            try {
-                let startIdx = text.indexOf(startTag);
-                if (startIdx === -1) return "";
-                startIdx += startTag.length;
-                let endIdx = text.indexOf(endTag, startIdx);
-                if (endIdx === -1) return text.substring(startIdx).trim();
-                return text.substring(startIdx, endIdx).trim();
-            } catch(e) {
-                return "";
             }
         }
 
@@ -716,7 +622,7 @@ Output Language Mode: ${lang}`;
         function renderHistory() {
             const listEl = document.getElementById('historyList');
             if(projectHistory.length === 0) {
-                listEl.innerHTML = `<p style="color: var(--text-muted); text-align: center; margin: 10px 0;">သိမ်းဆည်းထားသော ဇာတ်လမ်းမှတ်တမ်း မရှိသေးပါ။</p>`;
+                listEl.innerHTML = `<p style="color: var(--text-muted); text-align: center; margin: 10px 0;">မှတ်တမ်း မရှိသေးပါ။</p>`;
                 return;
             }
             let html = '';
@@ -731,15 +637,8 @@ Output Language Mode: ${lang}`;
 
         function loadHistory(idx) {
             const item = projectHistory[idx];
-            let fullText = item.content;
-            scriptOutput = extractSection(fullText, "===SECTION_1_SCRIPT===", "===SECTION_2_PHOTO===") || fullText;
-            photoOutput = extractSection(fullText, "===SECTION_2_PHOTO===", "===SECTION_3_VIDEO===") || "See main script";
-            videoOutput = extractSection(fullText, "===SECTION_3_VIDEO===", "===END===") || "See main script";
-
+            scriptOutput = item.content;
             document.getElementById('outputScriptContent').innerText = scriptOutput;
-            document.getElementById('outputPhotoContent').innerText = photoOutput;
-            document.getElementById('outputVideoContent').innerText = videoOutput;
-
             document.getElementById('blueprintCard').style.display = 'block';
             switchTab(1);
             showToast("📂 မှတ်တမ်းကို ဖွင့်လိုက်ပါပြီ။");
@@ -753,33 +652,33 @@ Output Language Mode: ${lang}`;
             else if(currentTab === 3) textToCopy = videoOutput;
 
             navigator.clipboard.writeText(textToCopy).then(() => {
-                showToast("📋 လက်ရှိ Tab Prompt ကို Copy ကူးပြီးပါပြီ");
+                showToast("📋 Copy ကူးပြီးပါပြီ");
             });
         }
 
         function downloadTxt() {
-            const fullCombined = `=== 1. MASTER SCRIPT & PROP TRUTH ===\n\n${scriptOutput}\n\n========================================\n\n=== 2. PROP-BOUND PHOTO PROMPTS ===\n\n${photoOutput}\n\n========================================\n\n=== 3. VIDEO PROMPTS ===\n\n${videoOutput}`;
+            const fullCombined = `=== 1. SCRIPT ===\n\n${scriptOutput}\n\n====================\n\n=== 2. PHOTO PROMPTS ===\n\n${photoOutput}\n\n====================\n\n=== 3. VIDEO PROMPTS ===\n\n${videoOutput}`;
             const blob = new Blob([fullCombined], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `Master_Synchronized_Prompts.txt`;
+            link.download = `Step_By_Step_Prompts.txt`;
             link.click();
-            showToast("📥 ဖိုင်အားလုံး Download ပြီးပါပြီ");
+            showToast("📥 Download ပြီးပါပြီ");
         }
 
         function downloadSrt() {
-            if(!isVIP) { alert('🔒 ဤဖိုင်ကို Download ရယူရန် VIP Member ဖြစ်ရန် လိုအပ်ပါသည်။'); return; }
+            if(!isVIP) { alert('🔒 VIP လိုအပ်ပါသည်။'); return; }
             let srtContent = "1\n00:00:01,000 --> 00:00:05,000\n" + scriptOutput.replace(/\n/g, "\n\n");
             const blob = new Blob([srtContent], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `Subtitles.srt`;
             link.click();
-            showToast("📑 .srt စာတန်းထိုးဖိုင် Download ပြီးပါပြီ");
+            showToast("📑 .srt ဖိုင် Download ပြီးပါပြီ");
         }
 
         function downloadJson() {
-            if(!isVIP) { alert('🔒 ဤဖိုင်ကို Download ရယူရန် VIP Member ဖြစ်ရန် လိုအပ်ပါသည်။'); return; }
+            if(!isVIP) { alert('🔒 VIP လိုအပ်ပါသည်။'); return; }
             const jsonData = JSON.stringify({ script: scriptOutput, photo: photoOutput, video: videoOutput, timestamp: new Date() }, null, 2);
             const blob = new Blob([jsonData], { type: 'application/json;charset=utf-8' });
             const link = document.createElement('a');
