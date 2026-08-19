@@ -325,7 +325,7 @@
                 <option value="English">English</option>
             </select>
 
-            <button class="generate-btn" onclick="generateBlueprint()">✨ Generate 3-Way Separated Prompts & Scripts →</button>
+            <button class="generate-btn" onclick="generateBlueprint()">✨ Generate Master Synchronized Prompts →</button>
         </div>
 
         <!-- LIVE PRODUCTION STATUS LOADING WIDGET -->
@@ -357,13 +357,13 @@
 
             <div class="status-footer-msg">
                 <div class="spinner" id="statusSpinner"></div>
-                <span id="statusSubText">Generating separated script, photo & video prompts...</span>
+                <span id="statusSubText">Enforcing strict master truth binding across script and image prompts...</span>
             </div>
         </div>
 
         <!-- 3 SEPARATE OUTPUT TABS CARD -->
         <div class="card" id="blueprintCard" style="display:none;">
-            <div class="section-header">02 / 3-Way Separated Production Output</div>
+            <div class="section-header">02 / Master Synchronized Production Output</div>
             <h1>Your creative direction</h1>
             
             <!-- Tab Buttons -->
@@ -375,19 +375,19 @@
 
             <!-- Tab 1: Script Output -->
             <div class="output-panel active" id="outputPanel1">
-                <label>Script with STRICT Audio Lock (Narrator & Character Names)</label>
+                <label>Script with STRICT Sequential Audio Flow & Named Locks</label>
                 <div class="output-box" id="outputScriptContent"></div>
             </div>
 
             <!-- Tab 2: Photo Prompts Output -->
             <div class="output-panel" id="outputPanel2">
-                <label>Image Generation Prompts (STRICT Object/Character Lock)</label>
+                <label>Image Prompts (STRICTLY BOUND to Script Props - No Mismatch)</label>
                 <div class="output-box" id="outputPhotoContent"></div>
             </div>
 
             <!-- Tab 3: Video Prompts Output -->
             <div class="output-panel" id="outputPanel3">
-                <label>Video Generation Prompts (STRICT Motion & State Lock)</label>
+                <label>Video Prompts (Consistent motion & synchronized states)</label>
                 <div class="output-box" id="outputVideoContent"></div>
             </div>
 
@@ -418,8 +418,8 @@
                         <div class="plan-price">0 ကျပ်</div>
                         <div class="plan-desc">အခြေခံအသုံးပြုသူများအတွက်</div>
                         <ul class="plan-features">
-                            <li>✔️ ဇာတ်လမ်း Prompt ၃ မျိုးခွဲထုတ်ပေးခြင်း</li>
-                            <li>✔️ Strict [Narrator] & Name Locks</li>
+                            <li>✔️ Master Synchronized Prompt ထုတ်ပေးခြင်း</li>
+                            <li>✔️ Strict Audio & Prop Binding</li>
                             <li>✔️ .txt ဖိုင် Export</li>
                             <li>❌ .srt နှင့် .json ဖိုင်များ မပါဝင်ပါ။ (VIP သီးသန့်)</li>
                         </ul>
@@ -609,30 +609,30 @@
             try {
                 await new Promise(r => setTimeout(r, 600));
                 
-                updateStep(2, "Generating separated Script & Narrative prompts...");
+                updateStep(2, "Enforcing master synchronization across script and image prompts...");
                 await new Promise(r => setTimeout(r, 400));
 
-                const promptText = `Act as an expert AI video production director. Create a professional production output for the following brief, enforcing STRICT AUDIO AND OBJECT LOCKS across all scenes.
+                // MASTER SYNCHRONIZED PROMPT LOCK (PREVENTS PROP MISMATCH & AUDIO OVERLAP)
+                const promptText = `Act as an expert Master AI Production Director. You must ensure absolute synchronization between the Script and the Image Prompts so that props (like a flute, lamp, or weapon) never mismatch.
 
 You MUST output your response in THREE clearly separated sections using these exact markdown headers:
 
 ===SECTION_1_SCRIPT===
-[STRICT AUDIO LOCK REQUIREMENT]: 
-- YOU MUST EXPLICITLY LABEL EVERY LINE.
-- USE "[Narrator]:" strictly for background storytelling. 
-- USE "[Character Name]:" (e.g., "[မောင်ဘ]:") strictly for character dialogues. 
-- DO NOT output generic "Voice" or unlabelled dialogue. The speaker must be clearly identified on every line.
+[STRICT SYNCHRONIZED AUDIO SCRIPT]: 
+1. PROP CONSISTENCY TRUTH: First explicitly state the exact prop/item held by the character for each scene (e.g., "Prop: Bamboo flute"). 
+2. SEQUENTIAL AUDIO TIMING: The [Narrator] must completely finish describing the scene environment and action first. Only after the narrator's sentence ends completely, the [Character Name] (e.g., "[ကိုအောင်မြ]:") may speak their dialogue. NO OVERLAPPING.
+3. SPEAKER NAME LOCK: Every line of speech or narration must be strictly prefixed with either "[Narrator]:" or "[Character Name]:".
 
 ===SECTION_2_PHOTO===
-[STRICT OBJECT LOCK REQUIREMENT]:
-- Provide ready-to-use Image Generation Prompts (for Midjourney/DALL-E/Bing).
-- LOCK RULE: You MUST maintain the exact same props and objects across all scenes (e.g., if a sword is used, it MUST be the same sword in all scenes). ABSOLUTELY NO scrolls, papers, or new objects should appear unless specified.
-- Incorporate Character DNA: ${charDNA}
+[STRICT PROP-BOUND IMAGE PROMPTS]:
+- Provide ready-to-use Image Generation Prompts (for Midjourney/DALL-E/Bing) scene-by-scene.
+- ABSOLUTE BINDING RULE: The object/prop specified in Section 1 for that specific scene MUST be the exact and only object rendered in the image prompt (e.g., if Section 1 says bamboo flute, Section 2 image prompt must explicitly feature a bamboo flute, NEVER a lantern or anything else).
+- Incorporate Character DNA Lock: ${charDNA}
 
 ===SECTION_3_VIDEO===
-[STRICT MOTION LOCK REQUIREMENT]:
-- Provide ready-to-use Video Generation Prompts (for Sora/Runway/Luma/Kling).
-- FOCUS on camera movement, framing, and maintaining consistent scene state.
+[STRICT MOTION & STATE PRESERVATION PROMPTS]:
+- Provide ready-to-use Video Generation Prompts (for Sora/Runway/Luma/Kling) scene-by-scene.
+- Maintain consistent motion, camera angles, and verify the prop remains locked in hand throughout the shot.
 
 Story Idea: ${idea}
 Character DNA Lock: ${charDNA || 'Maintain absolute consistent character model'}
@@ -650,7 +650,7 @@ Output Language Mode: ${lang}`;
                     fetchUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(targetUrl);
                 }
 
-                updateStep(3, "Structuring photo & video generation prompts...");
+                updateStep(3, "Structuring synchronized prop-bound prompts...");
 
                 const response = await fetch(fetchUrl, {
                     method: 'POST',
@@ -661,7 +661,7 @@ Output Language Mode: ${lang}`;
                 const data = await response.json();
                 if(data.error) throw new Error(data.error.message);
 
-                updateStep(4, "Validating strict locks and finalizing output...");
+                updateStep(4, "Validating master synchronization and finalizing...");
                 await new Promise(r => setTimeout(r, 500));
 
                 const fullText = data.candidates[0].content.parts[0].text;
@@ -683,7 +683,7 @@ Output Language Mode: ${lang}`;
                 switchTab(1);
 
                 saveToHistory(idea.slice(0, 25) + '...', fullText, style);
-                showToast("🎉 Strict Named Audio & Object-Locked Prompts ထွက်ရှိလာပါပြီ!");
+                showToast("🎉 Master Synchronized Prompts အောင်မြင်စွာ ထွက်ရှိလာပါပြီ!");
                 document.getElementById('blueprintCard').scrollIntoView({ behavior: 'smooth' });
 
             } catch (err) {
@@ -758,11 +758,11 @@ Output Language Mode: ${lang}`;
         }
 
         function downloadTxt() {
-            const fullCombined = `=== 1. SCRIPT PROMPT & BLUEPRINT ===\n\n${scriptOutput}\n\n========================================\n\n=== 2. PHOTO GENERATION PROMPTS ===\n\n${photoOutput}\n\n========================================\n\n=== 3. VIDEO GENERATION PROMPTS ===\n\n${videoOutput}`;
+            const fullCombined = `=== 1. MASTER SCRIPT & PROP TRUTH ===\n\n${scriptOutput}\n\n========================================\n\n=== 2. PROP-BOUND PHOTO PROMPTS ===\n\n${photoOutput}\n\n========================================\n\n=== 3. VIDEO PROMPTS ===\n\n${videoOutput}`;
             const blob = new Blob([fullCombined], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `Strict_Locked_Production_Prompts.txt`;
+            link.download = `Master_Synchronized_Prompts.txt`;
             link.click();
             showToast("📥 ဖိုင်အားလုံး Download ပြီးပါပြီ");
         }
