@@ -307,7 +307,7 @@
             </div>
 
             <div class="output-panel active" id="outputPanel1">
-                <label>Step 1: Strict Burmese Sequential Script (Under 900 Words)</label>
+                <label>Step 1: Strict Burmese Sequential Script (Complete & Filled)</label>
                 <div id="scriptScenesContainer"></div>
             </div>
 
@@ -527,7 +527,7 @@
             });
         }
 
-        // 🛠️ WORD COUNT STRICTLY UNDER 900 WORDS FOR YT CREATE COMPATIBILITY
+        // 🛠️ ROBUST PROMPT ENFORCING COMPLETE SCENE DETAILS WITHOUT EMPTY OUTPUTS
         async function generateStep(stepNo) {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             const idea = document.getElementById('storyIdea').value.trim();
@@ -548,23 +548,23 @@
             let stepTitle = "";
 
             let sceneCountInstruction = storyMode === 'short' 
-                ? "Generate a complete short story in exactly 10 concise scenes (Scene 1 to Scene 10)." 
-                : "Generate a compact story in 12 concise scenes maintaining good flow.";
+                ? "Generate exactly 10 complete, fully detailed scenes (Scene 1 to Scene 10). Do not leave any scene empty or marked with dashes." 
+                : "Generate a complete multi-scene sequence with fully detailed content in every single scene without omitting text.";
 
             if (stepNo === 1) {
-                stepTitle = "Generating Concise Burmese Script (<900 words)...";
-                promptText = `You are a strict Professional Burmese Scriptwriter. Output ONLY pure Burmese script content under 900 words total. DO NOT output metadata, titles, styles, or summaries. Start immediately with Scene 1.
+                stepTitle = "Generating Complete Burmese Script (<900 words)...";
+                promptText = `You are a strict Professional Burmese Scriptwriter. Output ONLY pure Burmese script content under 900 words total. Every single scene MUST be fully written out with complete narration and dialogue. NO EMPTY SCENES OR DASHES ALLOWED.
 STRICT GUARDRAILS:
 1. ${sceneCountInstruction}
-2. LENGTH LIMIT: The entire output MUST be strictly under 900 words total so it fits perfectly into YT Create editors. Each scene must be concise, optimized for a 10-second clip.
+2. LENGTH LIMIT: Entire output MUST be strictly under 900 words total.
 3. SCRIPT FORMAT: Use explicit Scene headers (e.g., "Scene 1: ...").
-4. AUDIO TIMING & LOCK: Every line must have an explicit speaker name lock. Narrator must finish describing before character dialogue. Format: "[Narrator]: ..." and "[Character Name]: ...".
+4. AUDIO TIMING & LOCK: Every line must have an explicit speaker name lock. Format: "[Narrator]: ..." and "[Character Name]: ...".
 5. PROP LOCK: Keep object/prop consistency identical throughout all scenes.
 
 Story Idea: ${idea}`;
             } else if (stepNo === 2) {
-                stepTitle = "Generating Concise Image Prompts (<900 words)...";
-                promptText = `You are an expert Prompt Engineer. Create ONLY Image Generation Prompts (Midjourney/DALL-E) scene-by-scene in English.
+                stepTitle = "Generating Complete Image Prompts (<900 words)...";
+                promptText = `You are an expert Prompt Engineer. Create ONLY Image Generation Prompts (Midjourney/DALL-E) scene-by-scene in English. Ensure every scene has a complete, rich prompt without empty placeholders.
 STRICT RULES:
 1. ${sceneCountInstruction}
 2. LENGTH LIMIT: Total output MUST be under 900 words.
@@ -573,8 +573,8 @@ STRICT RULES:
 
 Story Idea: ${idea}`;
             } else {
-                stepTitle = "Generating Concise Video Prompts (<900 words)...";
-                promptText = `You are an expert Video Director. Create ONLY Video Generation Prompts (Sora/Runway/Luma) scene-by-scene in English, optimized for 5-10 second clips.
+                stepTitle = "Generating Complete Video Prompts (<900 words)...";
+                promptText = `You are an expert Video Director. Create ONLY Video Generation Prompts (Sora/Runway/Luma) scene-by-scene in English, optimized for 5-10 second clips. Make sure every scene is fully fleshed out.
 STRICT RULES:
 1. ${sceneCountInstruction}
 2. LENGTH LIMIT: Total output MUST be under 900 words.
